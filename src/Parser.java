@@ -42,19 +42,21 @@ public class Parser {
 		Scanner input = new Scanner(file);
 
 		while(input.hasNext()) {
-		    String nextToken = input.next();
+			
+			String currentToken = input.next();
+			//System.out.println("This is the token" + " " + currentToken );
 		    
-		    System.out.println("This token is" + " " + nextToken );
-		    //or to process line by line
-		    //String nextLine = input.nextLine();
+		    if(currentToken.equals("<DOCNO>")){
+		    	mydocid = input.next();	
+		    }
+		    
 		}
 		
-		//mydocid = nextToken;
-		input.close();
-		
-		
+		System.out.println("The DOC ID is:" + " " + mydocid );
+		input.close();	
 	}
 	
+
 	
 
 }
