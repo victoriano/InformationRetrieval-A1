@@ -1,0 +1,91 @@
+scp -r Desktop s3395032@yallara.cs.rmit.edu.au:/public/courses/MultimediaInfoRetrieval/2012/a1/collection
+
+Reading Docs:  </docs/inputs.txt> 
+
+
+*map.txt { 1 APW19999924.0019 }
+		 { 2 BER6949424.63    }
+
+
+*lexicon.txt { 1 what }
+			 { 2 you  }
+			 { 3 want }
+
+
+*invlist.txt  <term nº>  <total docs with that term> <nº of doc, repititions> 
+			
+			{ 1          3   5 10  4 5  3 4}	
+			{ 2          2   3 4   4 1  3 1}	
+			{ 3          9   1 1   5 7  8 9}				   
+
+
+./index [-p] <sourcefile>
+
+
+Parsing Module 20% +  Indexing Module 25%
+----------------------------------------------------------
+
+Global variables { int p, String inputpath, String mytext, 
+				   String mydocid, List mytokens }
+
+
+1 - public void getopts( String[] args ){}
+	
+	Check number of parameter
+	if 1 -> p=0 and inputpath = args[0]
+	if 2 -> p=1 and inputpath = args[1]
+	} 
+
+2 - public void findid( String inputpath ){}
+	Open the file, find <DOCNO> 
+	and read in the variable String mydocid 
+	until it reaches </DOCNO>
+
+
+3 - public void writemap( String mydocid){}
+	Open the map.txt file, 
+	find a empty space add the doc ID
+	plus a number of reference
+
+	1 APW19999334.0018
+	2 BSFW14534334.43
+
+
+4 - public void readfile( String inputpath ){}
+	Open the file, find <TEXT> 
+	and read in a global buffer String mytext everything
+	until it reaches </TEXT>
+
+
+5 - public void stemmfile( String mytext ){}
+	Get token one by one and apply stemming rules 
+	to each token and save them in a List mytokens
+
+
+6 - public int saveindex( List mytokens ){}
+	
+	Open the file lexicon.tx
+	save all occurrences in a Hastable mylexicon 
+
+	Open the file invlist.txt
+	savel all occurrences in Hastable myinvlist
+
+	Iterate over the list
+	a look if it is in the Hastable mylexicon
+	If it is present access the Hastable myinvlist
+	increment the counter total
+
+
+7* - print term being indexes if p=1 in function() 6;
+
+
+-------------------------------------------------------- 
+Querying 25%
+
+./search <lexicon> <invlists> <map> <queryterm>*
+
+govermenments
+2
+XIE19997123.0292 2
+NYT20000817.0740 3
+
