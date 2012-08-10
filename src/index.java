@@ -1,26 +1,36 @@
+import java.io.FileNotFoundException;
+
 /**
  * Main File System
  */
 
 /**
- * @author Victoriano
+ * @author Victoriano Izquierdo
  *
  */
 public class index {
-
+	
+	
 	/**
 	 * @param args
+	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		System.out.println("Hola");
-		
+	public static void main(String[] args) throws FileNotFoundException {
+				
 		Parser myParser = new Parser();
+		myParser.getopts(args);
 		
-		int a = myParser.summer(2,3);
+		/* Test Unit - Getopts  */
+		String thepath = myParser.inputpath;
+		boolean pflag = myParser.p;
+		System.out.println(pflag);
+		System.out.println(thepath);
 		
-		System.out.println("El numero a es" + " " + a );
+		myParser.findid();
+
+		
+		
+		
 
 	}
 
