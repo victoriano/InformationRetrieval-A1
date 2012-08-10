@@ -1,4 +1,4 @@
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Main File System
@@ -13,21 +13,22 @@ public class index {
 	
 	/**
 	 * @param args
-	 * @throws FileNotFoundException 
+	 * @throws IOException 
 	 */
-	public static void main(String[] args) throws FileNotFoundException {
+	
+	public static void main(String[] args) throws IOException {
 				
 		Parser myParser = new Parser();
 		myParser.getopts(args);
 		
-		/* Test Unit - Getopts  */
+		/* Test Unit - Getopts  
 		String thepath = myParser.inputpath;
 		boolean pflag = myParser.p;
 		System.out.println(pflag);
-		System.out.println(thepath);
+		System.out.println(thepath); */
 		
 		myParser.findid();
-
+		myParser.writemap();
 		
 		
 		
