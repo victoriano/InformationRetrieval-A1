@@ -31,16 +31,8 @@ public class index {
 		
 		/* Retrieve tokens of the Doc and steam them */
 		myParser.readtext();
+		myParser.stemmtext();
 		myParser.printtokens();
-		
-		//myParser.stemmtext();
-		
-		MyStemmer test = new MyStemmer();
-		boolean say = test.ends("ponies", "ies");
-		String say2 = test.exec("sing");
-		System.out.println("Palabras iguales= " + say);
-		System.out.println("Nueva palabra: " + say2);
-		
 				
 		
 	}

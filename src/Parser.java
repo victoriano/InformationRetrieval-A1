@@ -27,11 +27,20 @@ public class Parser {
 	
 	public void printtokens(){
 		ListIterator<String> linesIterator = texttokens.listIterator();
+		ListIterator<String> linesIterator2 = stemmtokens.listIterator();
 		
 		System.out.println("Saving tokens -> ");
 		//Getting tokens from the list
 		while(linesIterator.hasNext()){
 		String cline = linesIterator.next();
+		System.out.println(cline);
+		}
+		System.out.println();
+		
+		System.out.println("Stemmed tokens -> ");
+		//Getting tokens from the list
+		while(linesIterator2.hasNext()){
+		String cline = linesIterator2.next();
 		System.out.println(cline);
 		}
 		System.out.println();
@@ -176,8 +185,7 @@ public class Parser {
 	
 	public void stemmtext(){
 		
-		//stemmtokens;
-		//MyStemmer stemmer = new MyStemmer();
+		MyStemmer stemmer = new MyStemmer();
 		ListIterator<String> linesIterator = texttokens.listIterator();
 		
 		//Getting Tokens
@@ -185,10 +193,12 @@ public class Parser {
 		
 		String mytoken = linesIterator.next();
 		
+		//convert them to lower case first
 		mytoken = mytoken.toLowerCase(); 
-		
-		System.out.println(mytoken);
 
+		String stemmedword = stemmer.exec(mytoken);
+		//System.out.println(stemmedword);
+		stemmtokens.add(stemmedword);
 		
 		}
 		

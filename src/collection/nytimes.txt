@@ -5,7 +5,7 @@
 <CATEGORY> usa </CATEGORY>
 <HEADLINE> Court Nixes Late-Term Abortion Laws </HEADLINE>
 <TEXT>
-<P> Text Content of the document caresses cats
+<P> Text Content of the document caresses cats sing singing ted
 </P>
 </TEXT>
 </BODY>

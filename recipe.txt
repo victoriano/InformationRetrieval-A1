@@ -84,6 +84,8 @@ Global variables { int p, String inputpath, List exttokens,
 - writemap() -- check that the document has already
 been included in the map 
 
+- stemmtext() -- being able to ends() Strings smaller than
+3 character long like cats without the s
 
 
 -------------------------------------------------------- 

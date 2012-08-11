@@ -39,19 +39,23 @@ public class MyStemmer {
 	public String exec (String mystring){
 		
 		char[] stringch = mystring.toCharArray();
-		char ch = stringch[0];
+		char ch = stringch[0]; 
+		
+		//Ignore stemming if it is a number or too short like "sing"
 		if (Character.isLetter(ch) && stringch.length>3 ){
 			
 			if(ends(mystring, "sses") || ends(mystring, "ies") ){
 			return	String.valueOf(removeElement(stringch, 2));
 			}
 			
-			if(ends(mystring, "s")){
+			if(ends(mystring, "s") ){
 		    return String.valueOf(removeElement(stringch, 1));
 			}
 			
-			if(ends(mystring, "ing") ){
-			return String.valueOf(removeElement(stringch, 3));
+			if(stringch.length>4){
+			  if(ends(mystring, "ing") ){
+			  return String.valueOf(removeElement(stringch, 3));
+			  }
 			}
 			
 			if(ends(mystring, "ed") ){
