@@ -28,6 +28,7 @@ public class index {
 		
 		/* Retrieve tokens of the Doc and steam them */
 		myParser.readfile();
+		//myParser.printtokens();
 				
 		
 	}

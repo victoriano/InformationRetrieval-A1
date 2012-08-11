@@ -1,12 +1,5 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,8 +15,21 @@ public class Parser {
 	// A simple method to check and print some state variables
 	public void printparam(){
 		
-		System.out.println("Print p is: " + p);
-		System.out.println(inputpath); 
+		System.out.println("P is set to: " + p);
+		System.out.println("Retrieving Doc: " + inputpath);
+		System.out.println();
+	}
+	
+	public void printtokens(){
+		ListIterator<String> linesIterator = texttokens.listIterator();
+		
+		System.out.println("Saving tokens -> ");
+		//Getting tokens from the list
+		while(linesIterator.hasNext()){
+		String cline = linesIterator.next();
+		System.out.println(cline);
+		}
+		System.out.println();
 	}
 	
 	
@@ -70,7 +76,8 @@ public class Parser {
 		    
 		}
 		
-		System.out.println("The DOC ID is:" + " " + mydocid );
+		System.out.println("With DOC ID:" + " " + mydocid );
+		System.out.println();
 		input.close();
 	}	
 	
@@ -104,13 +111,15 @@ public class Parser {
 		//Getting info from the Arraylist
 		while(linesIterator.hasNext()){
 		String cline = linesIterator.next();
-		System.out.println(cline);
+		//System.out.println(cline);
 		file.write(cline);
 		file.write("\n");
 		}
 		
 		// New Information
 		String lastline = i+1 + " " + mydocid ;
+		System.out.println("Adding Doc to map -> " + lastline);
+		System.out.println();
 		file.write(lastline);
 		
 		map.close();
@@ -121,7 +130,7 @@ public class Parser {
 	
 	/*  Saving all token found
 	 *  within <TEXT> 
-	 *  tags in a list 
+	 *  tags in texttokens List 
 	 *  
 	 */
 	
@@ -145,10 +154,10 @@ public class Parser {
 	    		boolean matchFound = matcher.matches(); 
 		
 	    		if(matchFound){
-	    		System.out.println("Not Adding token: " + currenttoken );
+	    		//System.out.println("Not Adding token: " + currenttoken );
 	    		}
 	    		else{
-	    		System.out.println("Adding token: " + currenttoken );
+	    		//System.out.println("Adding token: " + currenttoken );
 	    		texttokens.add(currenttoken);
 	    		}   	
 	    	}
