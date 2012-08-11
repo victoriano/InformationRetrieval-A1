@@ -25,8 +25,8 @@ Reading Docs:  </docs/inputs.txt>
 Parsing Module 20% +  Indexing Module 25%
 ----------------------------------------------------------
 
-Global variables { int p, String inputpath, String mytext, 
-				   String mydocid, List mytokens }
+Global variables { int p, String inputpath, List exttokens, 
+				   String mydocid, List stemmtokens }
 
 
 1 - public void getopts( String[] args ){}
@@ -53,13 +53,13 @@ Global variables { int p, String inputpath, String mytext,
 
 4 - public void readfile( String inputpath ){}
 	Open the file, find <TEXT> 
-	and read in a global buffer String mytext everything
+	and read in a global buffer List exttokens everything
 	until it reaches </TEXT>
 
 
-5 - public void stemmfile( String mytext ){}
+5 - public void stemmtext( List texttokens ){}
 	Get token one by one and apply stemming rules 
-	to each token and save them in a List mytokens
+	to each token and save them in a List stemmtokens
 
 
 6 - public int saveindex( List mytokens ){}
@@ -77,6 +77,13 @@ Global variables { int p, String inputpath, String mytext,
 
 
 7* - print term being indexes if p=1 in function() 6;
+
+
+/* TODO */
+
+- writemap() -- check that the document has already
+been included in the map 
+
 
 
 -------------------------------------------------------- 
