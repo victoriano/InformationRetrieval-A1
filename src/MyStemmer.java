@@ -40,7 +40,7 @@ public class MyStemmer {
 		
 		char[] stringch = mystring.toCharArray();
 		char ch = stringch[0];
-		if (Character.isLetter(ch)){
+		if (Character.isLetter(ch) && stringch.length>3 ){
 			
 			if(ends(mystring, "sses") || ends(mystring, "ies") ){
 			return	String.valueOf(removeElement(stringch, 2));
@@ -50,11 +50,12 @@ public class MyStemmer {
 		    return String.valueOf(removeElement(stringch, 1));
 			}
 			
-			if(ends(mystring, "ing") && stringch.length>4 ){
+			if(ends(mystring, "ing") ){
 			return String.valueOf(removeElement(stringch, 3));
 			}
 			
-			if(ends(mystring, "ed") && stringch.length>3 ){
+			if(ends(mystring, "ed") ){
+			System.out.println("The variable is here  " + String.valueOf(stringch) );
 			return String.valueOf(removeElement(stringch, 2));
 			} 		
 		   
