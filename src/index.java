@@ -19,16 +19,19 @@ public class index {
 		
 		Parser myParser = new Parser();
 		
+		/* Get optional parameter from args[] */
 		myParser.getopts(args);
-		//myParser.printparam();
+		myParser.printparam();
 		
-		/* Get the ID of the Doc and save it to the map file */
+		/* Extract the ID of the Doc and save it to the map file */
 		myParser.findid();
+		myParser.printdocid();
 		myParser.writemap();
 		
+		
 		/* Retrieve tokens of the Doc and steam them */
-		myParser.readfile();
-		//myParser.printtokens();
+		myParser.readtext();
+		myParser.printtokens();
 				
 		
 	}

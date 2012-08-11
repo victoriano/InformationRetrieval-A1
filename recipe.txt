@@ -51,7 +51,7 @@ Global variables { int p, String inputpath, List exttokens,
 	2 BSFW14534334.43
 
 
-4 - public void readfile( String inputpath ){}
+4 - public void readtext( String inputpath ){}
 	Open the file, find <TEXT> 
 	and read in a global buffer List exttokens everything
 	until it reaches </TEXT>

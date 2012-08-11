@@ -12,12 +12,17 @@ public class Parser {
 	List<String> texttokens = new ArrayList<String>();
 	
 	
-	// A simple method to check and print some state variables
+	/*  Simple methods to check and print state variables */
 	public void printparam(){
 		
 		System.out.println("P is set to: " + p);
 		System.out.println("Retrieving Doc: " + inputpath);
 		System.out.println();
+	}
+	
+	public void printdocid(){
+	System.out.println("With DOC ID:" + " " + mydocid );
+	System.out.println();
 	}
 	
 	public void printtokens(){
@@ -76,8 +81,6 @@ public class Parser {
 		    
 		}
 		
-		System.out.println("With DOC ID:" + " " + mydocid );
-		System.out.println();
 		input.close();
 	}	
 	
@@ -134,7 +137,7 @@ public class Parser {
 	 *  
 	 */
 	
-	public void readfile( ) throws IOException{
+	public void readtext( ) throws IOException{
 		
 		File file = new File(inputpath);
 		Scanner input = new Scanner(file);	
