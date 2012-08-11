@@ -10,7 +10,7 @@ public class Parser {
 	String inputpath;
 	String mydocid;
 	List<String> texttokens = new ArrayList<String>();
-	
+	List<String> stemmtokens = new ArrayList<String>();	
 	
 	/*  Simple methods to check and print state variables */
 	public void printparam(){
@@ -174,5 +174,25 @@ public class Parser {
 	Get token one by one and apply stemming rules 
 	to each token and save them in a List stemmtokens */
 	
+	public void stemmtext(){
+		
+		//stemmtokens;
+		//MyStemmer stemmer = new MyStemmer();
+		ListIterator<String> linesIterator = texttokens.listIterator();
+		
+		//Getting Tokens
+		while(linesIterator.hasNext()){
+		
+		String mytoken = linesIterator.next();
+		
+		mytoken = mytoken.toLowerCase(); 
+		
+		System.out.println(mytoken);
 
+		
+		}
+		
+	}
+	
+	
 }
