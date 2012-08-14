@@ -34,6 +34,9 @@ public class Indexer {
 		
 	}
 	
+	/*Add word to index */
+	// public void addWordToIndex(Word word){}
+	
 	
 	/* 6 - public int saveindex( List mytokens ){}
 	

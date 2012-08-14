@@ -16,7 +16,7 @@ public class Parser {
 	boolean p; 
 	String inputpath;
 	String mydocid;
-	public static int mydocnumber ;
+	int mydocnumber ;
 	List<String> texttokens = new ArrayList<String>();
 	public static List<String> stemmtokens = new ArrayList<String>();	
 	
@@ -109,6 +109,8 @@ public class Parser {
 	 * 
 	 */
 	
+
+	
 	@SuppressWarnings("unchecked")
 	public void writemap() throws IOException{
 		
@@ -119,21 +121,18 @@ public class Parser {
 		
 		//First checking if map.txt already exists
 		if (exists){
-			
-			System.out.println("El archivo exist’a!");
-			
+						
 			File mapfile = new File("map.txt");	
 			
 			Scanner map = new Scanner(mapfile);
 			// Reading and storing in a HashMap current info of the map file
 			while(map.hasNextLine()) {	
-				System.out.println("Entra en el While");
 				String currentline = map.nextLine();
 				String [] theline = currentline.split("\\s+");
-				mydocnumber = Integer.parseInt(theline[0]);
-				virtualMap.put(mydocnumber, theline[1]);
+				int cdocnumber = Integer.parseInt(theline[0]);
+				if(mydocid.equals(theline[1])){ mydocnumber = cdocnumber; };
+				virtualMap.put(cdocnumber, theline[1]);				
 				++totaldocs;
-				System.out.println("Reading: " + theline[1] + " number" + mydocnumber + "totaDocs" + totaldocs);
 				
 			}
 			map.close();
@@ -144,10 +143,9 @@ public class Parser {
 			 *  */
 			
 			if(!virtualMap.containsValue(mydocid)){
-				System.out.println("Entra en la novedad");
 				++totaldocs;
 				virtualMap.put(totaldocs, mydocid);
-				System.out.println("A–adiendo ahora: " + mydocid + " number" + totaldocs );
+				mydocnumber = totaldocs;
 			 }
 			
 			// Writing back to map file using the HashMap			
@@ -158,8 +156,7 @@ public class Parser {
 			Map.Entry e = (Map.Entry)it.next();
 			String writingline = e.getKey() + " " + e.getValue();
 			file.write(writingline);
-			file.write("\n");
-			System.out.println(writingline);			
+			file.write("\n");			
 			}
 			file.flush();
 			file.close();
@@ -170,7 +167,6 @@ public class Parser {
 			 * if didn't exits originally 
 			 */
 			File mapfile = new File("map.txt");
-			System.out.println("Estaba vacio!");
 			String lastline = 1 + " " + mydocid ;
 			mapfile.createNewFile();
 			BufferedWriter file = new BufferedWriter(new FileWriter("map.txt"));
@@ -245,6 +241,10 @@ public class Parser {
 		
 		}
 		
+	}
+	
+	public void printdocnumber(){
+		System.out.print(mydocnumber);
 	}
 	
 	
