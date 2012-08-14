@@ -12,17 +12,17 @@ public class Parser {
 	List<String> texttokens = new ArrayList<String>();
 	List<String> stemmtokens = new ArrayList<String>();	
 	
+	
 	/*  Simple methods to check and print state variables */
 	public void printparam(){
-		
 		System.out.println("P is set to: " + p);
 		System.out.println("Retrieving Doc: " + inputpath);
 		System.out.println();
 	}
 	
 	public void printdocid(){
-	System.out.println("With DOC ID:" + " " + mydocid );
-	System.out.println();
+		System.out.println("With DOC ID:" + " " + mydocid );
+		System.out.println();
 	}
 	
 	public void printtokens(){
@@ -204,5 +204,24 @@ public class Parser {
 		
 	}
 	
+	
+	/* 6 - public int saveindex( List mytokens ){}
+	
+	Open the file lexicon.tx
+	save all occurrences in a Arraylist mylexicon 
+
+	Open the file invlist.txt
+	savel all occurrences in Hastable myinvlist
+
+	Iterate over the list
+	a look if it is in the Hastable mylexicon
+	If it is present access the Hastable myinvlist
+	increment the counter total
+	*/
+	
+	public void saveindex( ){
+		
+		
+	}
 	
 }

@@ -33,6 +33,8 @@ public class index {
 		myParser.readtext();
 		myParser.stemmtext();
 		myParser.printtokens();
+		
+		/*Add Index */
 				
 		
 	}
