@@ -22,20 +22,39 @@ public class Indexer {
 	HashMap<Integer, String> lexicon = new HashMap<Integer, String>();
 	HashMap<Integer, Word> indexinvert = new HashMap<Integer, Word>();
 	
+	
 	/* Basic constructor */
-	public Indexer( int mydocnum, List<String> tokens){
-		this.docnum = mydocnum;
-		this.stemmtokens = tokens;		
+	public Indexer(){
+		this.docnum = Parser.mydocnumber;
+		this.stemmtokens = Parser.stemmtokens;		
 	}
 	
-	/* Load lexicon from disk into a Map */
-	public void loadlexicon (){
+	
+	/* Load lexicon from disk into a HashMap<Integer, String> */
+	public void loadLexicon (){
 		
 		
 	}
 	
-	/*Add word to index */
-	// public void addWordToIndex(Word word){}
+	/*Load invert index from disk into a HashMap<Integer, Word> */
+	public void loadInvertIndex (){
+		
+		
+	}
+	
+	public boolean isTermInLexicon(String term){
+		//If it is, go to index and update both: global and reference
+		return true;
+	}
+	
+	public void addTermtoLexicon(String term){
+		//Add it to both Lexicon and index
+	}
+	
+	
+	public void exec(){
+	//Firer of Instructions on the indexer 
+	}
 	
 	
 	/* 6 - public int saveindex( List mytokens ){}
@@ -51,24 +70,6 @@ public class Indexer {
 	If it is present access the Hastable myinvlist
 	increment the counter total
 	*/
-	
-	
-	
-	/* Check if a token is already in the lexicon 
-	 * returns the position in the lexicon or 0 if is not
-	 * */
-	public int isinlexicon(){
-		
-	return 0;
-	}
-	
-	/* If it's a new word we add it at the end of the lexicon */
-	public void addtolexicon( String toke ){
-		
-		
-	}
-	
-	/*If it's an existing word we look for it in the lexicon  */
 
 	
 }
