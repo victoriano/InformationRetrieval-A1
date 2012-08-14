@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class Parser {
 	
-	boolean p; 
+	public static boolean p; 
 	String inputpath;
 	String mydocid;
 	public static int mydocnumber ;

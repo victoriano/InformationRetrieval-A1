@@ -28,8 +28,7 @@ public class Word {
 	
 	
 	/* Initialize a new word from a "String" line read from disk*/
-	public Word (String term, String rawWord){
-		this.term = term;
+	public Word (String rawWord){
 		//Convert rawWord to Array of Strings
 		int j = 1;
 		String [] word = rawWord.split("\\s+");
@@ -95,7 +94,7 @@ public class Word {
 		
 		/* Some simple Unit Tests for this Word class */
 		
-		Word myword = new Word("hola", "15 3 8 1 7");
+		Word myword = new Word("15 3 8 1 7");
 		System.out.println("Added Word Term: " + myword.term + " | Total Ocurrences: " + myword.occurrences );
 		System.out.println("Serialized Word added: " + myword.serializeWord() );
 		int ndoc1 = myword.getDocOccurrences(1);
