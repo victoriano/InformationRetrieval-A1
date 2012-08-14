@@ -16,8 +16,9 @@ public class Parser {
 	boolean p; 
 	String inputpath;
 	String mydocid;
+	public static int mydocnumber ;
 	List<String> texttokens = new ArrayList<String>();
-	static List<String> stemmtokens = new ArrayList<String>();	
+	public static List<String> stemmtokens = new ArrayList<String>();	
 	
 	
 	/*  Simple methods to check and print state variables */
@@ -99,51 +100,86 @@ public class Parser {
 		
 		input.close();
 	}	
+
 	
-	/* I don't check whether this doc has been 
-	 * already mapped or not
-	 * just include it to end of the map adding
-	 * the corresponding number
+	/* Loading the map from
+	 * disk, checking if that
+	 * DOC has already been indexed
+	 * writing back to disk 
 	 * 
 	 */
 	
+	@SuppressWarnings("unchecked")
 	public void writemap() throws IOException{
 		
-		File mapfile = new File("map.txt");
-		Scanner map = new Scanner(mapfile);
-		int i = 0;
-		ArrayList<String> lines = new ArrayList<String>();
+		boolean exists = (new File("map.txt")).exists();
 		
-		// Reading and storing current info of the map file
-		while(map.hasNextLine()) {
+		int totaldocs = 0;
+		HashMap<Integer, String> virtualMap = new HashMap<Integer, String>();
+		
+		//First checking if map.txt already exists
+		if (exists){
 			
-			String currentline = map.nextLine();
-			lines.add(currentline);
-			++i;
-		    //System.out.println("Reading: " + currentline + " number" + i);	
-		}	
-		
-		// Writing back to map file using the Arraylist + the new information
-		BufferedWriter file = new BufferedWriter(new FileWriter("map.txt"));
-		ListIterator<String> linesIterator = lines.listIterator();
-		
-		//Getting info from the Arraylist
-		while(linesIterator.hasNext()){
-		String cline = linesIterator.next();
-		//System.out.println(cline);
-		file.write(cline);
-		file.write("\n");
+			System.out.println("El archivo exist’a!");
+			
+			File mapfile = new File("map.txt");	
+			
+			Scanner map = new Scanner(mapfile);
+			// Reading and storing in a HashMap current info of the map file
+			while(map.hasNextLine()) {	
+				System.out.println("Entra en el While");
+				String currentline = map.nextLine();
+				String [] theline = currentline.split("\\s+");
+				mydocnumber = Integer.parseInt(theline[0]);
+				virtualMap.put(mydocnumber, theline[1]);
+				++totaldocs;
+				System.out.println("Reading: " + theline[1] + " number" + mydocnumber + "totaDocs" + totaldocs);
+				
+			}
+			map.close();
+			
+			/* If the present document is the 
+			 * first time indexed, we added
+			 * to the end of the HashMap and rewrite map.txt
+			 *  */
+			
+			if(!virtualMap.containsValue(mydocid)){
+				System.out.println("Entra en la novedad");
+				++totaldocs;
+				virtualMap.put(totaldocs, mydocid);
+				System.out.println("A–adiendo ahora: " + mydocid + " number" + totaldocs );
+			 }
+			
+			// Writing back to map file using the HashMap			
+				
+			Iterator it = virtualMap.entrySet().iterator();
+			BufferedWriter file = new BufferedWriter(new FileWriter("map.txt"));
+			while (it.hasNext()) { 
+			Map.Entry e = (Map.Entry)it.next();
+			String writingline = e.getKey() + " " + e.getValue();
+			file.write(writingline);
+			file.write("\n");
+			System.out.println(writingline);			
+			}
+			file.flush();
+			file.close();
+
+			
+		}else{
+			/* Write back just the new Information read
+			 * if didn't exits originally 
+			 */
+			File mapfile = new File("map.txt");
+			System.out.println("Estaba vacio!");
+			String lastline = 1 + " " + mydocid ;
+			mapfile.createNewFile();
+			BufferedWriter file = new BufferedWriter(new FileWriter("map.txt"));
+			file.write(lastline);
+			file.flush();
+			file.close();
 		}
-		
-		// New Information
-		String lastline = i+1 + " " + mydocid ;
-		System.out.println("Adding Doc to map -> " + lastline);
-		System.out.println();
-		file.write(lastline);
-		
-		map.close();
-		file.flush();
-		file.close();
+				
+
 	}
 	
 	

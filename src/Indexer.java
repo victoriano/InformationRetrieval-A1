@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Dealing with the indexing process
@@ -18,13 +17,15 @@ public class Indexer {
 	String indexinvert_path = "indexinvert.txt";
 	
 	/*Data Structures in memory */
+	int docnum;
 	List<String> stemmtokens = new ArrayList<String>();
 	HashMap<Integer, String> lexicon = new HashMap<Integer, String>();
 	HashMap<Integer, Word> indexinvert = new HashMap<Integer, Word>();
 	
 	/* Basic constructor */
-	public Indexer(List<String> tokens){
-		this.stemmtokens = tokens;
+	public Indexer( int mydocnum, List<String> tokens){
+		this.docnum = mydocnum;
+		this.stemmtokens = tokens;		
 	}
 	
 	/* Load lexicon from disk into a Map */

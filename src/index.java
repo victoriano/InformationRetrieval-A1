@@ -27,8 +27,7 @@ public class index {
 		/* Extract the ID of the Doc and save it to the map file */
 		myParser.findid();
 		myParser.printdocid();
-		myParser.writemap();
-		
+		myParser.writemap();		
 		
 		/* Retrieve tokens of the Doc and steam them */
 		myParser.readtext();
@@ -36,8 +35,8 @@ public class index {
 		myParser.printtokens();
 		
 		/*  ****** Indexing ******  */
-		
-		Indexer indexinvert = new Indexer(Parser.stemmtokens);
+		System.out.println(Parser.mydocnumber);
+		//Indexer indexinvert = new Indexer(Parser.mydocnumber, Parser.stemmtokens);
 		
 		
 	}
