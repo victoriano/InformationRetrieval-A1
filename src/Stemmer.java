@@ -1,5 +1,15 @@
+/**
+ * Stemmer - Functions to filter 
+ * and clean the words before 
+ * they are passed to the index
+ * 
+ * @author Victoriano Izquierdo
+ * @student 3395032
+ * @course Information Retrieval
+ * @assignment 1
+ */
 
-public class MyStemmer {
+public class Stemmer {
 	
 	/* Checks if a String has a given termination end */
 	public boolean ends(String thestring, String end){

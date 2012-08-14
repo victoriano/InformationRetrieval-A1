@@ -3,6 +3,13 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Parser Class
+ * @author Victoriano Izquierdo
+ * @student 3395032
+ * @course Information Retrieval
+ * @assignment 1
+ */
 
 public class Parser {
 	
@@ -10,7 +17,7 @@ public class Parser {
 	String inputpath;
 	String mydocid;
 	List<String> texttokens = new ArrayList<String>();
-	List<String> stemmtokens = new ArrayList<String>();	
+	static List<String> stemmtokens = new ArrayList<String>();	
 	
 	
 	/*  Simple methods to check and print state variables */
@@ -140,9 +147,9 @@ public class Parser {
 	}
 	
 	
-	/*  Saving all token found
+	/*  Saving all tokens found
 	 *  within <TEXT> 
-	 *  tags in texttokens List 
+	 *  tags in a texttokens List 
 	 *  
 	 */
 	
@@ -185,7 +192,7 @@ public class Parser {
 	
 	public void stemmtext(){
 		
-		MyStemmer stemmer = new MyStemmer();
+		Stemmer stemmer = new Stemmer();
 		ListIterator<String> linesIterator = texttokens.listIterator();
 		
 		//Getting Tokens
@@ -204,24 +211,5 @@ public class Parser {
 		
 	}
 	
-	
-	/* 6 - public int saveindex( List mytokens ){}
-	
-	Open the file lexicon.tx
-	save all occurrences in a Arraylist mylexicon 
-
-	Open the file invlist.txt
-	savel all occurrences in Hastable myinvlist
-
-	Iterate over the list
-	a look if it is in the Hastable mylexicon
-	If it is present access the Hastable myinvlist
-	increment the counter total
-	*/
-	
-	public void saveindex( ){
-		
-		
-	}
 	
 }

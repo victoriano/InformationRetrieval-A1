@@ -17,6 +17,7 @@ public class index {
 	
 	public static void main(String[] args) throws IOException {
 		
+		/*  ****** Parsing ******  */
 		Parser myParser = new Parser();
 		
 		/* Get optional parameter from args[] */
@@ -34,8 +35,10 @@ public class index {
 		myParser.stemmtext();
 		myParser.printtokens();
 		
-		/*Add Index */
-				
+		/*  ****** Indexing ******  */
+		
+		Indexer indexinvert = new Indexer(Parser.stemmtokens);
+		
 		
 	}
 

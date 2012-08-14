@@ -1,8 +1,16 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * Word Class for the Index
+ * @author Victoriano Izquierdo
+ * @student 3395032
+ * @course Information Retrieval
+ * @assignment 1
+ */
 
 public class Word {
 	
@@ -52,18 +60,22 @@ public class Word {
 		return this.doc_occurrences.get(doc);
 	}
 	
-	/* Print/Writes the word info serialized */
+	/*Returns Array of documents id's of this word*/
 	@SuppressWarnings("unchecked")
-	public void printmap (){
-		System.out.print(this.occurrences + " ");
+	public ArrayList<Integer> presentDocs(){
+		ArrayList<Integer> docs = new ArrayList<Integer>();
+		int i = 0;
 		Iterator it = doc_occurrences.entrySet().iterator();
 		while (it.hasNext()) {
 		Map.Entry e = (Map.Entry)it.next();
-		System.out.print(e.getKey() + " " + e.getValue() + " ");
+		docs.add(Integer.parseInt(e.getKey().toString()));
+		++i;
 		}
-		System.out.println();
+		
+		return docs;
+		
 	}
-	
+		
 	@SuppressWarnings("unchecked")
 	/*Form a serialized String info of this word */
 	public String serializeWord (){
@@ -81,27 +93,17 @@ public class Word {
 	
 	public static void main(String[] args) throws IOException {
 		
-		/* Word myword = new Word("hola", 3);
-		myword.addOccurrenceToDoc(3);
-		myword.addOccurrenceToDoc(1);
+		/* Some simple Unit Tests for this Word class */
 		
-		String terms = myword.term;
-		int n3 = myword.getDocOccurrences(3);
-		int n1 = myword.getDocOccurrences(1);
-		int total = myword.occurrences;
-		myword.printmap();
-		String finalw = myword.serializeWord();
-		System.out.println(finalw);
+		Word myword = new Word("hola", "15 3 8 1 7");
+		System.out.println("Added Word Term: " + myword.term + " | Total Ocurrences: " + myword.occurrences );
+		System.out.println("Serialized Word added: " + myword.serializeWord() );
+		int ndoc1 = myword.getDocOccurrences(1);
+		System.out.println("Ocurrences of the word in DOC 1 = " + ndoc1 );
+		ArrayList<Integer> vals = myword.presentDocs(); 
+		System.out.print("This word is present in Docs: ");
+		for (int v : vals){ System.out.print(v + " ");}
 		
-		System.out.println("A–adido " + terms + " tantas " + n3 + " veces. Global Ocurrences " + total );
-		System.out.println("Ocurrences in Doc 1 ->" + n1); */
-		
-		Word myword = new Word("hola", "5 3 8 1 7");
-		System.out.println("Added: " + myword.term + " | Ocurrences: " + myword.occurrences );
-		int n3 = myword.getDocOccurrences(1);
-		String terms = myword.term;
-		int total = myword.occurrences;
-		System.out.println("A–adido " + terms + " tantas " + n3 + " veces. Global Ocurrences " + total );
 	} 
 
 }
