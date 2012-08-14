@@ -16,7 +16,7 @@ public class Parser {
 	boolean p; 
 	String inputpath;
 	String mydocid;
-	int mydocnumber ;
+	public static int mydocnumber ;
 	List<String> texttokens = new ArrayList<String>();
 	public static List<String> stemmtokens = new ArrayList<String>();	
 	
@@ -109,7 +109,6 @@ public class Parser {
 	 * 
 	 */
 	
-
 	
 	@SuppressWarnings("unchecked")
 	public void writemap() throws IOException{

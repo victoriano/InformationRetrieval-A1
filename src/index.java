@@ -34,10 +34,9 @@ public class index {
 		myParser.stemmtext();
 		myParser.printtokens();
 		
-		myParser.printdocnumber();
 		
 		/*  ****** Indexing ******  */
-		//System.out.println(Parser.mydocnumber);
+
 		//Indexer indexinvert = new Indexer(Parser.mydocnumber, Parser.stemmtokens);
 		
 		
