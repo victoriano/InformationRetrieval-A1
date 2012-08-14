@@ -34,13 +34,12 @@ public class index {
 		myParser.readtext();
 		myParser.stemmtext();
 		myParser.printtokens();
-		
+		System.out.println("DESDE AQUI " + Parser.mydocnumber);
 		
 		/*  ****** Indexing ******  */
-		
-		/* 
+			
 		Indexer myIndex = new Indexer();
-		myIndex.exec(); */
+		myIndex.exec(); 
 		
 		
 	}

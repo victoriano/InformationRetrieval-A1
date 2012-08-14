@@ -130,6 +130,7 @@ public class Parser {
 				String [] theline = currentline.split("\\s+");
 				int cdocnumber = Integer.parseInt(theline[0]);
 				if(mydocid.equals(theline[1])){ mydocnumber = cdocnumber; };
+				System.out.println("El mydocnumber= " + mydocnumber);
 				virtualMap.put(cdocnumber, theline[1]);				
 				++totaldocs;
 				
@@ -145,6 +146,7 @@ public class Parser {
 				++totaldocs;
 				virtualMap.put(totaldocs, mydocid);
 				mydocnumber = totaldocs;
+				System.out.println("El mydocnumber2= " + mydocnumber);
 			 }
 			
 			// Writing back to map file using the HashMap			
@@ -166,6 +168,7 @@ public class Parser {
 			 * if didn't exits originally 
 			 */
 			File mapfile = new File("map.txt");
+			mydocnumber = 1;
 			String lastline = 1 + " " + mydocid ;
 			mapfile.createNewFile();
 			BufferedWriter file = new BufferedWriter(new FileWriter("map.txt"));

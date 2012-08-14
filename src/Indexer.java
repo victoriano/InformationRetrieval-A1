@@ -132,13 +132,36 @@ public class Indexer {
 		
 	}
 	
-	public boolean isTermInLexicon(String term){
-		//If it is, go to index and update both: global and reference
-		return true;
+	public void addTermtoLexicon(String term){
+		//Add it to the lexicon
+		int tkey = 1;
+		tkey += lexicon.size();
+		System.out.println("the SIZE IS: " + tkey);
+		lexicon.put(tkey, term);
+		
+		//Add it to index
+		System.out.println("Docnum: " + docnum);
+		Word myworte = new Word(term, docnum);
+		indexinvert.put(tkey, myworte);
 	}
 	
-	public void addTermtoLexicon(String term){
-		//Add it to both Lexicon and index
+	@SuppressWarnings("unchecked")
+	public void updateOccurrences(String term){
+		
+		//Find this.term in the index HastTable
+		Iterator it = indexinvert.entrySet().iterator();
+		
+		while (it.hasNext()) { 
+			Map.Entry e = (Map.Entry)it.next();
+			Word winfo = (Word) e.getValue();
+			String wterm = winfo.term;
+			//System.out.println("El termino es " + wterm);
+			if(wterm.equals(term)){
+				winfo.addOccurrenceToDoc(docnum);
+				//++winfo.occurrences;
+			}
+		}
+		
 	}
 	
 
@@ -149,16 +172,17 @@ public class Indexer {
 		loadLexicon();
 		loadInvertIndex();
 		
-		/*	
+		// Add terms to index
 		for (String term : stemmtokens){ 
-			boolean isTerm = isTermInLexicon(term);
-			if(!isTerm){ 
+			if(!lexicon.containsValue(term)){ 
 				addTermtoLexicon(term);
 				if(printing){ 
 					System.out.println("Indexing... " + term);
 				}
+			}else{
+				updateOccurrences(term);
 			}
-		} */
+		} 
 		
 		writeLexicon();
 		writeInvertIndex();
@@ -168,7 +192,7 @@ public class Indexer {
 	/* A main method for testing */
 	
 	public static void main(String[] args) throws IOException {
-	
+		
 		System.out.println("Probando Indexer...");
 		Indexer myIndex = new Indexer();
 		myIndex.exec(); 

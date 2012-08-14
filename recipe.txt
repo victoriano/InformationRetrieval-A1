@@ -65,7 +65,9 @@ Global variables { int p, String inputpath, List exttokens,
 6 - public int saveindex( List mytokens ){}
 	
 	Open the file lexicon.tx
-	save all occurrences in a Hastable mylexicon 
+	save all occurrences in a Hastable mylexicon
+
+
 
 	Open the file invlist.txt
 	savel all occurrences in Hastable myinvlist
@@ -81,11 +83,7 @@ Global variables { int p, String inputpath, List exttokens,
 
 /* TODO */
 
-- writemap() -- check that the document has already
-been included in the map 
-
-- stemmtext() -- being able to ends() Strings smaller than
-3 character long like cats without the s
+- stemmer () - check . ; and puntuation symbols to index 
 
 
 -------------------------------------------------------- 
