@@ -24,18 +24,18 @@ public class Word {
 		this.term = term;
 		this.occurrences = 1;
 		this.doc_occurrences.put(doc, 1);
-	}
-	
+	}	
 	
 	/* Initialize a new word from a "String" line read from disk*/
-	public Word (String rawWord){
+	public Word (String theword, String rawWord){
 		//Convert rawWord to Array of Strings
+		this.term = theword;
 		int j = 1;
 		String [] word = rawWord.split("\\s+");
 		this.occurrences= Integer.parseInt(word[0]);
 		//Adding doc/occurs to HashTable
 		while(j<word.length){
-		System.out.println("Doc: " + word[j] + " Occu:" + word[j+1]);
+		//System.out.println("Doc: " + word[j] + " Occu:" + word[j+1]);
 		this.doc_occurrences.put(Integer.parseInt(word[j]), Integer.parseInt(word[j+1]));	
 		j = j+2;
 		}		
@@ -94,7 +94,7 @@ public class Word {
 		
 		/* Some simple Unit Tests for this Word class */
 		
-		Word myword = new Word("15 3 8 1 7");
+		Word myword = new Word("hola", "15 3 8 1 7");
 		System.out.println("Added Word Term: " + myword.term + " | Total Ocurrences: " + myword.occurrences );
 		System.out.println("Serialized Word added: " + myword.serializeWord() );
 		int ndoc1 = myword.getDocOccurrences(1);

@@ -13,7 +13,8 @@ import java.util.regex.Pattern;
 
 public class Parser {
 	
-	public static boolean p; 
+	public static boolean p;
+	public static boolean existingDoc;
 	String inputpath;
 	String mydocid;
 	public static int mydocnumber ;
@@ -129,8 +130,11 @@ public class Parser {
 				String currentline = map.nextLine();
 				String [] theline = currentline.split("\\s+");
 				int cdocnumber = Integer.parseInt(theline[0]);
-				if(mydocid.equals(theline[1])){ mydocnumber = cdocnumber; };
-				System.out.println("El mydocnumber= " + mydocnumber);
+				if(mydocid.equals(theline[1])){ 
+					mydocnumber = cdocnumber;
+					existingDoc = true;
+					};
+				//System.out.println("El mydocnumber= " + mydocnumber);
 				virtualMap.put(cdocnumber, theline[1]);				
 				++totaldocs;
 				
@@ -146,7 +150,7 @@ public class Parser {
 				++totaldocs;
 				virtualMap.put(totaldocs, mydocid);
 				mydocnumber = totaldocs;
-				System.out.println("El mydocnumber2= " + mydocnumber);
+				//System.out.println("El mydocnumber2= " + mydocnumber);
 			 }
 			
 			// Writing back to map file using the HashMap			

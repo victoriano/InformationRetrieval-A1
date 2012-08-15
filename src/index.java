@@ -33,8 +33,8 @@ public class index {
 		/* Retrieve tokens of the Doc and steam them */
 		myParser.readtext();
 		myParser.stemmtext();
-		myParser.printtokens();
-		System.out.println("DESDE AQUI " + Parser.mydocnumber);
+		//myParser.printtokens();
+		
 		
 		/*  ****** Indexing ******  */
 			

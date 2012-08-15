@@ -54,7 +54,7 @@ public class Indexer {
 				String currentline = lmap.nextLine();
 				String [] theline = currentline.split("\\s+");
 				int tkey = Integer.parseInt(theline[0]);
-				System.out.println("Adding a Lexicon " + tkey + " " + theline[1]);
+				//System.out.println("Adding a Lexicon " + tkey + " " + theline[1]);
 				lexicon.put(tkey, theline[1]);				
 				++totalTermsLoaded;				
 			}
@@ -82,12 +82,15 @@ public class Indexer {
 				String currentline = lmap.nextLine();
 				String [] theline = currentline.split("\\s+");
 				int tkey = Integer.parseInt(theline[0]);
+				//Find Word Term with tkey in the lexicon
+				String theword = lexicon.get(tkey);
+				// Compile Info
 				for(int i=1;i<theline.length;i++){
 					restofInfo = restofInfo + theline[i] + " ";
 				}
-				System.out.println("Adding a Index " + tkey + " " +restofInfo);
-				Word termInfo = new Word(restofInfo);
-				System.out.println("Traducido como " + termInfo.serializeWord());
+				//System.out.println("Adding a Index " + theword + " "+ tkey + " " +restofInfo);
+				Word termInfo = new Word(theword, restofInfo);
+				//System.out.println("Traducido como " + termInfo.serializeWord());
 				indexinvert.put(tkey, termInfo);								
 			}
 			lmap.close();
@@ -136,11 +139,10 @@ public class Indexer {
 		//Add it to the lexicon
 		int tkey = 1;
 		tkey += lexicon.size();
-		System.out.println("the SIZE IS: " + tkey);
 		lexicon.put(tkey, term);
 		
 		//Add it to index
-		System.out.println("Docnum: " + docnum);
+		//System.out.println("Docnum: " + docnum);
 		Word myworte = new Word(term, docnum);
 		indexinvert.put(tkey, myworte);
 	}
@@ -162,18 +164,24 @@ public class Indexer {
 			}
 		}
 		
-	}
-	
+	}		
 
 	/* Firer of instruction for the indexer */
 	
 	public void exec() throws IOException{
  
+		//Checks if this DOC has already been indexed before indexing
+		if(Parser.existingDoc){
+			System.out.println("Document already indexed... exiting" );
+			System.exit(0);
+		}
+		
 		loadLexicon();
 		loadInvertIndex();
 		
 		// Add terms to index
 		for (String term : stemmtokens){ 
+			//Checks if the term was already in the lexicon
 			if(!lexicon.containsValue(term)){ 
 				addTermtoLexicon(term);
 				if(printing){ 
@@ -194,8 +202,7 @@ public class Indexer {
 	public static void main(String[] args) throws IOException {
 		
 		System.out.println("Probando Indexer...");
-		Indexer myIndex = new Indexer();
-		myIndex.exec(); 
+
 	
 	}
 	
