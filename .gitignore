@@ -38,3 +38,6 @@ ehthumbs.db
 Thumbs.db
 
 bin/
+lexicon.txt
+indexinvert.txt
+map.txt
