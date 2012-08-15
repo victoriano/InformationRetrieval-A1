@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +47,7 @@ public class Word {
 	public int occurrencesInDoc(int doc){
 	return this.doc_occurrences.containsKey(doc) ? this.doc_occurrences.get(doc) : 0;
 	}
+	
 		
 	/*Add an occurrence for a given DOC */
 	public void addOccurrenceToDoc(int doc){
@@ -74,7 +76,20 @@ public class Word {
 		return docs;
 		
 	}
+	
+	/* ** Utility function for Search printing Occurrences of a Word along its Doc ID ** */
+	
+	public void retrievePrintDocs() throws FileNotFoundException{
+		ArrayList<Integer> docs = this.presentDocs();
+		for(int doc : docs){
+			String docid = Parser.getDocID(doc); 
+			System.out.print(docid);
+			System.out.print( " " + this.getDocOccurrences(doc));	
+			System.out.println();
+		}		
 		
+	}
+			
 	@SuppressWarnings("unchecked")
 	/*Form a serialized String info of this word */
 	public String serializeWord (){

@@ -1,7 +1,7 @@
 import java.io.IOException;
 
 /**
- * Main File System
+ * Main for Parsing + Indexing operations
  * @author Victoriano Izquierdo
  * @student 3395032
  * @course Information Retrieval
@@ -34,8 +34,7 @@ public class index {
 		myParser.readtext();
 		myParser.stemmtext();
 		//myParser.printtokens();
-		
-		
+				
 		/*  ****** Indexing ******  */
 			
 		Indexer myIndex = new Indexer();

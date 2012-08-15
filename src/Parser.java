@@ -101,7 +101,36 @@ public class Parser {
 		
 		input.close();
 	}	
-
+	
+	
+	/* ** Utility function for Search ** */
+	
+	public static String getDocID(int doc) throws FileNotFoundException{
+		
+		String foundDoc = "";
+		
+		//Load Map to Memory in the HashTable
+		HashMap<Integer, String> virtualMap = new HashMap<Integer, String>();
+		File mapfile = new File("map.txt");	
+		Scanner map = new Scanner(mapfile);
+		// Reading and storing in a HashMap current info of the map file
+		while(map.hasNextLine()) {	
+			String currentline = map.nextLine();
+			String [] theline = currentline.split("\\s+");
+			int cdocnumber = Integer.parseInt(theline[0]);
+			//If this is the DOC number return ID associated
+			if(cdocnumber == doc){ 
+				foundDoc = theline[1]; 
+				};
+			//System.out.println("El mydocnumber= " + mydocnumber);
+			virtualMap.put(cdocnumber, theline[1]);				
+			}
+		map.close();
+		//Get and return Value of the Key "doc"
+		
+		return foundDoc;
+		
+	}
 	
 	/* Loading the map from
 	 * disk, checking if that
@@ -247,10 +276,6 @@ public class Parser {
 		
 		}
 		
-	}
-	
-	public void printdocnumber(){
-		System.out.print(mydocnumber);
 	}
 	
 	

@@ -164,6 +164,27 @@ public class Indexer {
 			}
 		}
 		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public int findKey(String term){
+		
+		//Find this.term in the index HastTable
+		Iterator it = lexicon.entrySet().iterator();
+		int Gkey = 0;
+		while (it.hasNext()) { 
+			Map.Entry e = (Map.Entry)it.next();
+			String fterm = (String)e.getValue();
+			int fkey = (Integer)e.getKey();
+			//System.out.println("El termino es " + wterm);
+			if(fterm.equals(term)){
+				Gkey = fkey;
+				//++winfo.occurrences;
+			}
+		}
+		
+		return Gkey;
+		
 	}		
 
 	/* Firer of instruction for the indexer */
