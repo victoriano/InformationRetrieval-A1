@@ -3,14 +3,29 @@ Victoriano Izquierdo
 Student Nº 3395032
 
 *Index Construction 
-Parsing and indexing implementation
+Parsing and indexing implementation -
 
+First of all the optional parameters are gathered using a simple getopts() function. Then start iterating through the docs enclosed by <DOC></DOC> tags. Once we are inside a document we gather its ID using a findid() function.
+
+Then we open the map file, check if there are any other doc already mapped or this one has already been mapped, add it if it is new, write the file and close it. 
+
+Now we will parse the text enclosed within <TEXT></TEXT> tags using readtext() function from the Parser and save all of them - except those that follow a HTML tag pattern - in List of currentTokens.
+
+Next we will call the stemmtext() function to stemm all of these terms , putting them in lower case, removing punctuation and other symbols and following the Porter rules specified in the slides plus ing and ed terminations. I created a Stemmer class for all of that. Stemmed tokens are save in a List of currentStemmedtokens.
+
+Now we create a instance of the Indexer class and pass the list of stemmed tokens to be indexed. 
+
+For that matter, we will check first if this DOC has already been indexed, if not, we will load the Lexicon file and Index to memory in 2 separated data structure, hash tables. We will start adding each of the stemmed terms checking first if they are already in the Lexicon, if it is, we will just go to the index and we will update the total number of occurrences for that term and increment by one the occurrences in for that particular Doc being read. If it is a new term we add it to the Lexicon data structure on memory. We write the new index and lexicon in every Doc iteration. 
 
 *Index Search
-Index search implementation
+Index search implementation -
+
+For searching, after retrieving all the parameters and storing all the queries in an ArrayList, we proceed to load in memory all the Lexicon, then we will check if the query term is already in the Lexicon, if it is we get its corresponding key that we will use iterate over the file containing the index and retrieve just that single line as a String. Using an utility function defined in the Word class we create an instance of this term of the index and read its information, that is: the total number of occurrences of that term and the Docs that contain this term along with its frequencies.  
 
 *Index Size
 
-¿How large is your inverted index? How does this compare with the size of the original collection?
+¿How large is your inverted index? How does this compare with the size of the original collection? Why is it larger/smaller than the original collection?
 
-Why is it larger/smaller than the original collection?
+The inverted index is as big as the number of stemmed terms indexed in the lexicon. This size is quite smaller than the original collection, since we omitted all the repeated words and much other useless information for searching. 
+
+
