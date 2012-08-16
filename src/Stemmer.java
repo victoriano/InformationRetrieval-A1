@@ -71,7 +71,8 @@ public class Stemmer {
 			if(ends(mystring, "ed") ){
 			System.out.println("The variable is here  " + String.valueOf(stringch) );
 			return String.valueOf(removeElement(stringch, 2));
-			} 		
+			}
+			
 		   
 		}
 		

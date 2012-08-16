@@ -281,6 +281,9 @@ public class Parser {
 		
 		//convert them to lower case first
 		mytoken = mytoken.toLowerCase(); 
+		
+		//remove any non-character in the string 
+		mytoken = mytoken.replaceAll("\\W", "");
 
 		String stemmedword = stemmer.exec(mytoken);
 		//System.out.println(stemmedword);
