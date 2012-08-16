@@ -1,0 +1,16 @@
+- Report -
+Victoriano Izquierdo
+Student Nº 3395032
+
+*Index Construction 
+Parsing and indexing implementation
+
+
+*Index Search
+Index search implementation
+
+*Index Size
+
+¿How large is your inverted index? How does this compare with the size of the original collection?
+
+Why is it larger/smaller than the original collection?

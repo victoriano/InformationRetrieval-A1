@@ -189,7 +189,7 @@ public class Indexer {
 
 	/* Firer of instruction for the indexer */
 	
-	public void exec() throws IOException{
+	public void exec(List<String> currentStemmedTokens) throws IOException{
  
 		//Checks if this DOC has already been indexed before indexing
 		if(Parser.existingDoc){
@@ -201,7 +201,7 @@ public class Indexer {
 		loadInvertIndex();
 		
 		// Add terms to index
-		for (String term : stemmtokens){ 
+		for (String term : currentStemmedTokens){ 
 			//Checks if the term was already in the lexicon
 			if(!lexicon.containsValue(term)){ 
 				addTermtoLexicon(term);

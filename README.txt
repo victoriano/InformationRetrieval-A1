@@ -1,8 +1,20 @@
-This is a primitive search engine built from scratch by Victoriano Izquierdo
+- README -
+Victoriano Izquierdo
+Student Nº 3395032
 
-Reading Docs:  </docs/inputs.txt> 
+** For Indexing:
+
+javac index.java
+java index p collection/nytimes.txt
+java index p /public/courses/MultimediaInfoRetrieval/2012/a1/collection
+
+** For Querying
+
+javac search.java
+java search lexicon.txt indexinvert.txt map.txt singing car cats abuelo people
 
 
+-------------------------------------------
 *map.txt { 1 APW19999924.0019 }
 		 { 2 BER6949424.63    }
 
@@ -21,6 +33,4 @@ Reading Docs:  </docs/inputs.txt>
 
 ./index [-p] <sourcefile>
 
-
-Parsing Module 20% +  Indexing Module 25%
 ----------------------------------------------------------

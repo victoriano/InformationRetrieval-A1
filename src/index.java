@@ -1,4 +1,7 @@
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * Main for Parsing + Indexing operations
@@ -25,22 +28,57 @@ public class index {
 		myParser.getopts(args);
 		myParser.printparam();
 		
-		/* Extract the ID of the Doc and save it to the map file */
-		myParser.findid();
-		myParser.printdocid();
-		myParser.writemap();		
 		
-		/* Retrieve tokens of the Doc and steam them */
-		myParser.readtext();
-		myParser.stemmtext();
-		//myParser.printtokens();
-				
-		/*  ****** Indexing ******  */
-			
-		Indexer myIndex = new Indexer();
-		myIndex.exec(); 
-		
-		
+		/*  Iterate Through all the Docs 
+		 * of a given collection file path 
+		 * 
+		 */
+			 
+			File file = new File(myParser.inputpath);
+			Scanner input = new Scanner(file);	
+		    
+			String starTokenD = "<DOC>";
+		    String endTokenD = "</DOC>";
+		    String currenttoken = "";
+		    Parser.mydocnumber = 1;
+		    
+		    while(input.findWithinHorizon(starTokenD, 0) != null ){
+		     //System.out.println("DOC En el primer loop: " + currenttoken );
+		    	while(!input.hasNext(endTokenD)){
+		    		
+		    		currenttoken = input.next();
+		    		//System.out.println("DOC En el segundo loop: " + currenttoken );
+		    		if(currenttoken.equals("<DOCNO>")){
+		    			//To la morcilla va aqu’
+		    			
+		    			/* Extract the ID of this DOC and save it to the map file */
+		    			//System.out.println("Let's find Info for DOC: " + Parser.mydocnumber );
+		    			//System.out.println();
+		    			
+		    			myParser.findid(input);
+		    			myParser.printdocid();
+		    			myParser.writemap();		
+		    			
+		    			//System.out.println("NUMBER DOC now: " + Parser.mydocnumber );
+		    			/* Retrieve tokens of the Doc and steam them */
+		    			List<String> currentTokens = myParser.readtext(input, Parser.mydocnumber);
+		    			List<String> currentStemmedTokens = myParser.stemmtext(currentTokens);
+		    					    					
+		    			/*  ****** Indexing ******  */		    				
+		    			Indexer myIndex = new Indexer();
+		    			myIndex.exec(currentStemmedTokens); 
+		    			
+		    		}
+		    			    		
+		    	}
+		    	++Parser.mydocnumber;
+		    }
+		    
+		    System.out.println("Total DOCs found: " + Parser.mydocnumber);
+		    System.out.println();
+		    myParser.printtokens();
+		    input.close();
 	}
+	
 
 }

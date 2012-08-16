@@ -17,7 +17,8 @@ public class Parser {
 	public static boolean existingDoc;
 	String inputpath;
 	String mydocid;
-	public static int mydocnumber ;
+	public static int mydocnumber;
+	int currentDocN = 1;
 	List<String> texttokens = new ArrayList<String>();
 	public static List<String> stemmtokens = new ArrayList<String>();	
 	
@@ -30,28 +31,23 @@ public class Parser {
 	}
 	
 	public void printdocid(){
-		System.out.println("With DOC ID:" + " " + mydocid );
+		System.out.println("Found DOC ID:" + " " + mydocid );
+		System.out.println("given number ID is :" + " " + mydocnumber );
 		System.out.println();
 	}
 	
 	public void printtokens(){
-		ListIterator<String> linesIterator = texttokens.listIterator();
-		ListIterator<String> linesIterator2 = stemmtokens.listIterator();
 		
-		System.out.println("Saving tokens -> ");
-		//Getting tokens from the list
-		while(linesIterator.hasNext()){
-		String cline = linesIterator.next();
-		System.out.println(cline);
-		}
-		System.out.println();
+		/* System.out.println("Saved tokens -> ");
 		
-		System.out.println("Stemmed tokens -> ");
-		//Getting tokens from the list
-		while(linesIterator2.hasNext()){
-		String cline = linesIterator2.next();
-		System.out.println(cline);
-		}
+		for(String t : texttokens)
+			System.out.println(t); */
+		
+		System.out.println("Saved stemmed tokens -> ");
+		
+		for(String t : stemmtokens)
+			System.out.println(t);
+		
 		System.out.println();
 	}
 	
@@ -81,29 +77,32 @@ public class Parser {
 	
 	/* Open the doc file, find <DOCNO> 
 	 * and store the ID in the variable String mydocid 
+	 * until </DOCNO>
 	 */
 	
-	public void findid() throws FileNotFoundException{
+	public void findid(Scanner input) throws FileNotFoundException{
 		
-		File file = new File(inputpath);
-		Scanner input = new Scanner(file);
-
-		while(input.hasNext()) {
+		//File file = new File(inputpath);
+		//Scanner input = new Scanner(file);
+		
+		String stopToken = "</DOCNO>";
+		String currentToken = "";
+		
+		while(!currentToken.equals(stopToken)) {
 			
-			String currentToken = input.next();
+			currentToken = input.next();
+			if(currentToken.equals(stopToken)){break;}
+			
 			//System.out.println("This is the token" + " " + currentToken );
-		    
-		    if(currentToken.equals("<DOCNO>")){
-		    	mydocid = input.next();	
-		    }
-		    
+			mydocid = currentToken;
+					    
 		}
-		
-		input.close();
+
 	}	
 	
 	
 	/* ** Utility function for Search ** */
+	//It returns the DocID of a given number Doc
 	
 	public static String getDocID(int doc) throws FileNotFoundException{
 		
@@ -213,25 +212,37 @@ public class Parser {
 
 	}
 	
-	
+
 	/*  Saving all tokens found
 	 *  within <TEXT> 
 	 *  tags in a texttokens List 
 	 *  
 	 */
 	
-	public void readtext( ) throws IOException{
+	 
+	public List<String> readtext(Scanner input, int theDocN ) throws IOException{
 		
-		File file = new File(inputpath);
-		Scanner input = new Scanner(file);	
+		List<String> texttokensC = new ArrayList<String>();
+		
+		//File file = new File(inputpath);
+		//Scanner input = new Scanner(file);	
 	    
 		String pat = "<TEXT>";
 	    String patend = "</TEXT>";
+	    String currenttoken = "";
+	    
+	    //System.out.println("KKK: " + input.next() );
 
 	    while(input.findWithinHorizon(pat, 0) != null ){
+	    //System.out.println("En el primer loop: " + currenttoken );
 	    	while(!input.hasNext(patend)){
 	    		
-	    		String currenttoken = input.next();
+	    		currenttoken = input.next();
+	    		//System.out.println("KKK: " + currenttoken );
+	    		//System.out.println("Current docN " + currentDocN + " " + theDocN );
+	    		//if(currenttoken.equals(patend)){break;}
+	    		//if(currenttoken.equals(patend)){break;}
+	    		//System.out.println("En el segundo loop: " + currenttoken );
 	    		
 	    		// Regex for HTML tags within the <TEXT></TEXT>
 	    		String patternStr = "<[/]*([A-Z]+)*[^/]*?>";
@@ -244,23 +255,39 @@ public class Parser {
 	    		}
 	    		else{
 	    		//System.out.println("Adding token: " + currenttoken );
-	    		texttokens.add(currenttoken);
+	    			if(currentDocN == theDocN){
+	    				texttokensC.add(currenttoken);
+	    				//System.out.println("Adding token: " + currenttoken );
+	    			}
 	    		}   	
+	    		
 	    	}
- 
+	    	currentDocN++;
+	    	if(currentDocN>theDocN){
+	    		break;
+	    	}
+    		//System.out.println( "We are in the docN" + docN);
+	     
 	    }
-
-	    input.close();		 
-	}
+	    
+	    return texttokensC;
+ 
+	  } 
 	
-	/* 5 - public void stemmtext( List texttokens ){}
-	Get token one by one and apply stemming rules 
-	to each token and save them in a List stemmtokens */
 	
-	public void stemmtext(){
+	
+	/* Get token one by one and 
+	 * apply stemming rules 
+	 * to each token and save them in a List stemmtokens 
+	 * 
+	 */
+	
+	public List<String> stemmtext(List<String> currentTokens){
+		
+		List<String> stemmtokensC = new ArrayList<String>();
 		
 		Stemmer stemmer = new Stemmer();
-		ListIterator<String> linesIterator = texttokens.listIterator();
+		ListIterator<String> linesIterator = currentTokens.listIterator();
 		
 		//Getting Tokens
 		while(linesIterator.hasNext()){
@@ -272,11 +299,12 @@ public class Parser {
 
 		String stemmedword = stemmer.exec(mytoken);
 		//System.out.println(stemmedword);
-		stemmtokens.add(stemmedword);
+		stemmtokensC.add(stemmedword);
 		
 		}
-		
+		return stemmtokensC;
 	}
+	
 	
 	
 }
