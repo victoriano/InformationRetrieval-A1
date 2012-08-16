@@ -47,7 +47,12 @@ public class Stemmer {
 	 */
 	
 	public String exec (String mystring){
-		
+	
+		if( mystring.length()==0){
+			System.out.println("String vacio detectado " + mystring);
+			return "emptystring";
+		}else{
+				
 		char[] stringch = mystring.toCharArray();
 		char ch = stringch[0]; 
 		
@@ -69,7 +74,6 @@ public class Stemmer {
 			}
 			
 			if(ends(mystring, "ed") ){
-			System.out.println("The variable is here  " + String.valueOf(stringch) );
 			return String.valueOf(removeElement(stringch, 2));
 			}
 			
@@ -77,6 +81,6 @@ public class Stemmer {
 		}
 		
 		return mystring;
-		
-	}
+	 }
+   }
 }
