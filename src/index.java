@@ -67,6 +67,8 @@ public class index {
 		    			/* Index the SteemedTokens parsed in this DOC */
 		    			Indexer myIndex = new Indexer();
 		    			myIndex.exec(currentStemmedTokens); 
+		    			myIndex.writeLexicon();
+		    			myIndex.writeInvertIndex();
 		    			
 		    		}
 		    			    		

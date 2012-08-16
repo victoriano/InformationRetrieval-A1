@@ -213,8 +213,7 @@ public class Indexer {
 			}
 		} 
 		
-		writeLexicon();
-		writeInvertIndex();
+
 		
 	}	
 	
