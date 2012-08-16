@@ -1,6 +1,6 @@
 scp -r Desktop s3395032@yallara.cs.rmit.edu.au:/public/courses/MultimediaInfoRetrieval/2012/a1/collection
 
-scp -r s3395032@yallara.cs.rmit.edu.au:
+scp -r Desktop/src s3395032@yallara.cs.rmit.edu.au:~/IR 
 
 Reading Docs:  </docs/inputs.txt> 
 
