@@ -189,19 +189,19 @@ public class Indexer {
 
 	/* Firer of instruction for the indexer */
 	
-	public void exec(List<String> currentStemmedTokens) throws IOException{
+	public void exec(List<String> stemmtokens) throws IOException{
  
 		//Checks if this DOC has already been indexed before indexing
 		if(Parser.existingDoc){
-			System.out.println("Document already indexed... exiting" );
-			System.exit(0);
+			System.out.println("This DOC has already being indexed..." );
+			//System.exit(0);
 		}
 		
 		loadLexicon();
 		loadInvertIndex();
 		
 		// Add terms to index
-		for (String term : currentStemmedTokens){ 
+		for (String term : stemmtokens){ 
 			//Checks if the term was already in the lexicon
 			if(!lexicon.containsValue(term)){ 
 				addTermtoLexicon(term);

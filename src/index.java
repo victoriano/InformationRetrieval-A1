@@ -24,13 +24,14 @@ public class index {
 		/*  ****** Parsing ******  */
 		Parser myParser = new Parser();
 		
-		/* Get optional parameter from args[] */
+		/* Get parameters */
 		myParser.getopts(args);
 		myParser.printparam();
 		
 		
-		/*  Iterate Through all the Docs 
-		 * of a given collection file path 
+		/*  
+		 *  Iterate Through all the Docs 
+		 *  in a single collection file 
 		 * 
 		 */
 			 
@@ -43,28 +44,27 @@ public class index {
 		    Parser.mydocnumber = 1;
 		    
 		    while(input.findWithinHorizon(starTokenD, 0) != null ){
-		     //System.out.println("DOC En el primer loop: " + currenttoken );
+
 		    	while(!input.hasNext(endTokenD)){
 		    		
 		    		currenttoken = input.next();
-		    		//System.out.println("DOC En el segundo loop: " + currenttoken );
+
 		    		if(currenttoken.equals("<DOCNO>")){
-		    			//To la morcilla va aqu’
 		    			
-		    			/* Extract the ID of this DOC and save it to the map file */
-		    			//System.out.println("Let's find Info for DOC: " + Parser.mydocnumber );
-		    			//System.out.println();
-		    			
+		    			/* Extract the ID of this DOC */		    			
 		    			myParser.findid(input);
 		    			myParser.printdocid();
-		    			myParser.writemap();		
 		    			
-		    			//System.out.println("NUMBER DOC now: " + Parser.mydocnumber );
-		    			/* Retrieve tokens of the Doc and steam them */
+		    			/* If it's a new DOC, save its ID to the map file */
+		    			myParser.writemap();		
+		    					    			
+		    			/* Retrieve tokens of the DOC Text and steam them */
 		    			List<String> currentTokens = myParser.readtext(input, Parser.mydocnumber);
 		    			List<String> currentStemmedTokens = myParser.stemmtext(currentTokens);
+		    			//myParser.printtokens(currentStemmedTokens);
 		    					    					
-		    			/*  ****** Indexing ******  */		    				
+		    			/*  ****** Indexing ******  */
+		    			/* Index the SteemedTokens parsed in this DOC */
 		    			Indexer myIndex = new Indexer();
 		    			myIndex.exec(currentStemmedTokens); 
 		    			
@@ -72,11 +72,9 @@ public class index {
 		    			    		
 		    	}
 		    	++Parser.mydocnumber;
+		    	System.out.println();
 		    }
-		    
-		    System.out.println("Total DOCs found: " + Parser.mydocnumber);
-		    System.out.println();
-		    myParser.printtokens();
+   
 		    input.close();
 	}
 	

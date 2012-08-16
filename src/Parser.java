@@ -19,11 +19,11 @@ public class Parser {
 	String mydocid;
 	public static int mydocnumber;
 	int currentDocN = 1;
-	List<String> texttokens = new ArrayList<String>();
 	public static List<String> stemmtokens = new ArrayList<String>();	
 	
 	
-	/*  Simple methods to check and print state variables */
+	/*  Simple methods to check and print some state variables */
+	
 	public void printparam(){
 		System.out.println("P is set to: " + p);
 		System.out.println("Retrieving Doc: " + inputpath);
@@ -32,20 +32,20 @@ public class Parser {
 	
 	public void printdocid(){
 		System.out.println("Found DOC ID:" + " " + mydocid );
-		System.out.println("given number ID is :" + " " + mydocnumber );
+		System.out.println("given ID number:" + " " + mydocnumber );
 		System.out.println();
 	}
 	
-	public void printtokens(){
+	public void printtokens(List<String> currentStemmedTokens){
 		
-		/* System.out.println("Saved tokens -> ");
+		System.out.println("Saved tokens -> ");
 		
-		for(String t : texttokens)
-			System.out.println(t); */
+		for(String t : currentStemmedTokens)
+			System.out.println(t); 
 		
 		System.out.println("Saved stemmed tokens -> ");
 		
-		for(String t : stemmtokens)
+		for(String t : currentStemmedTokens)
 			System.out.println(t);
 		
 		System.out.println();
@@ -131,10 +131,12 @@ public class Parser {
 		
 	}
 	
-	/* Loading the map from
+	
+	/* 
+	 * Loading the map from
 	 * disk, checking if that
 	 * DOC has already been indexed
-	 * writing back to disk 
+	 * writing everything back to disk 
 	 * 
 	 */
 	
@@ -213,9 +215,10 @@ public class Parser {
 	}
 	
 
-	/*  Saving all tokens found
-	 *  within <TEXT> 
-	 *  tags in a texttokens List 
+	/*  
+	 *  Saving all tokens found
+	 *  within <TEXT></TEXT>
+	 *  tags in a texttokensC List 
 	 *  
 	 */
 	
@@ -223,61 +226,43 @@ public class Parser {
 	public List<String> readtext(Scanner input, int theDocN ) throws IOException{
 		
 		List<String> texttokensC = new ArrayList<String>();
-		
-		//File file = new File(inputpath);
-		//Scanner input = new Scanner(file);	
-	    
+			    
 		String pat = "<TEXT>";
 	    String patend = "</TEXT>";
 	    String currenttoken = "";
 	    
-	    //System.out.println("KKK: " + input.next() );
-
+	    
 	    while(input.findWithinHorizon(pat, 0) != null ){
-	    //System.out.println("En el primer loop: " + currenttoken );
 	    	while(!input.hasNext(patend)){
 	    		
 	    		currenttoken = input.next();
-	    		//System.out.println("KKK: " + currenttoken );
-	    		//System.out.println("Current docN " + currentDocN + " " + theDocN );
-	    		//if(currenttoken.equals(patend)){break;}
-	    		//if(currenttoken.equals(patend)){break;}
-	    		//System.out.println("En el segundo loop: " + currenttoken );
 	    		
-	    		// Regex for HTML tags within the <TEXT></TEXT>
+	    		// Regex to avoid HTML tags contained in the Text
 	    		String patternStr = "<[/]*([A-Z]+)*[^/]*?>";
 	    		Pattern pattern = Pattern.compile(patternStr);
 	    		Matcher matcher = pattern.matcher(currenttoken);
 	    		boolean matchFound = matcher.matches(); 
 		
-	    		if(matchFound){
-	    		//System.out.println("Not Adding token: " + currenttoken );
+	    		if(!matchFound && currentDocN == theDocN){
+	    			//System.out.println("Adding token: " + currenttoken );
+	    			texttokensC.add(currenttoken);
 	    		}
-	    		else{
-	    		//System.out.println("Adding token: " + currenttoken );
-	    			if(currentDocN == theDocN){
-	    				texttokensC.add(currenttoken);
-	    				//System.out.println("Adding token: " + currenttoken );
-	    			}
-	    		}   	
-	    		
+   		
 	    	}
-	    	currentDocN++;
-	    	if(currentDocN>theDocN){
-	    		break;
-	    	}
-    		//System.out.println( "We are in the docN" + docN);
-	     
-	    }
 	    
-	    return texttokensC;
+	    currentDocN++;
+	    if(currentDocN>theDocN){break;}
+	    
+	   }
+	    
+	  return texttokensC;
  
-	  } 
+	 } 
 	
 	
 	
 	/* Get token one by one and 
-	 * apply stemming rules 
+	 * apply stemming rules required 
 	 * to each token and save them in a List stemmtokens 
 	 * 
 	 */
