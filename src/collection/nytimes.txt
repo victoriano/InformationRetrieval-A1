@@ -18,7 +18,7 @@
 <CATEGORY> usa </CATEGORY>
 <HEADLINE> Court Nixes Late-Term Abortion Laws </HEADLINE>
 <TEXT>
-<P> "Segundo" texts people -para probar
+<P> "Segundo" texts people -para probar people
 </P>
 </TEXT>
 </BODY>

@@ -10,7 +10,7 @@ import java.util.Scanner;
  * @author Victoriano Izquierdo
  * @student 3395032
  * @course Information Retrieval
- * @assignment 1
+ * @assignment 2
  */
 
 public class search {
@@ -22,23 +22,72 @@ public class search {
 	String indexinvert_path;
 	String map_path;
 	
+	/* For Ranked Query */
+	String queryLabel;
+	int numResults;
+	
+	/* For Novelty Detection */
+	int lambdaNumber;
+	int ranknUsed;
+	
+	/* For benchmarking */
+	long start;
+	long end;
+	
+	boolean isRanked;
+	
 	ArrayList<String> querieTerms = new ArrayList<String>();
+		
+	 /**
+     * Returns the execution time of the search
+     * @return time
+     */
+    public long executionTime(){
+    	this.start = System.currentTimeMillis();
+		this.end = System.currentTimeMillis();
+        return end-start;
+    }
+    
 	
-	
-	/* Another simple getopts() 
+	/** 
+	 * Another simple getopts() 
 	 * assign the corresponding path to each file; 
 	 * and fill an ArrayList querieTerms with the queries
 	 */
 	
 	public void getopts( String[] args ){
 		
-		lexicon_path = args[0];
-		indexinvert_path = args[1];
-		map_path = args[2];
+		/* Query for Ranked Retrieval */
+		if(args[1].equals("-q")){
+			isRanked = true;
+			queryLabel = args[2];
+			numResults = Integer.parseInt(args[4]);
+			lexicon_path = args[5];
+			indexinvert_path = args[6];
+			map_path = args[7];
+			
+			for(int i=8; i<args.length; i++){
+				querieTerms.add(args[i]);
+			} 
 		
-		for(int i=3; i<args.length; i++){
-			querieTerms.add(args[i]);
+		/* Query for Novelty Detection */	
+		}else if(args[1].equals("-lambda")){
+			isRanked = false;
+		    lambdaNumber = Integer.parseInt(args[2]);
+			queryLabel = args[4];
+			numResults = Integer.parseInt(args[6]);			
+			
+			lexicon_path = args[7];
+			indexinvert_path = args[8];
+			map_path = args[9];
+			ranknUsed = Integer.parseInt(args[11]);
+			
+			for(int i=12; i<args.length; i++){
+				querieTerms.add(args[i]);
+			} 
+			
 		}
+		
 		
 	}
 	

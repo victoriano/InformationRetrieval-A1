@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.lang.Math;
 
 /**
  * Dealing with the indexing process
@@ -18,6 +19,7 @@ import java.util.Scanner;
  */
 
 public class Indexer {
+	
 	
 	/* Paths for files on disk*/
 	String lexicon_path = "lexicon.txt";
@@ -31,6 +33,8 @@ public class Indexer {
 	HashMap<Integer, String> lexicon = new HashMap<Integer, String>();
 	HashMap<Integer, Word> indexinvert = new HashMap<Integer, Word>();
 	
+	/* An array list to keep frequencies of each term (index) in the present DOC */ 
+	HashMap<Integer, Integer> dupWeights = new HashMap<Integer, Integer>();
 	
 	/* Basic constructor */
 	public Indexer(){
@@ -135,6 +139,7 @@ public class Indexer {
 		
 	}
 	
+	
 	public void addTermtoLexicon(String term){
 		//Add it to the lexicon
 		int tkey = 1;
@@ -145,12 +150,37 @@ public class Indexer {
 		//System.out.println("Docnum: " + docnum);
 		Word myworte = new Word(term, docnum);
 		indexinvert.put(tkey, myworte);
+		/* Adding a new term to the arraylist of weights */	
+		int mykey = tkey -1;
+		//System.out.println("a–adiendo 1 vez " + term + " in position " + mykey);
+		dupWeights.put(mykey, 1);
 	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public void updateOccurrences(String term){
 		
+		int indexV = 1;
+		int i = 0;
+		//Find this.term in the lexicon HastTable
+		Iterator ito = lexicon.entrySet().iterator();
+		
+		while (ito.hasNext()) { 
+			
+			Map.Entry o = (Map.Entry)ito.next();
+			String tlexi = (String) o.getValue();
+			
+			if(tlexi.equals(term)){
+				indexV = i;
+				//System.out.println("posicion en lexicon de " + term + "es " + indexV);
+				break;
+			}
+			
+			++i;
+		}
+		
 		//Find this.term in the index HastTable
+		
 		Iterator it = indexinvert.entrySet().iterator();
 		
 		while (it.hasNext()) { 
@@ -160,10 +190,12 @@ public class Indexer {
 			//System.out.println("El termino es " + wterm);
 			if(wterm.equals(term)){
 				winfo.addOccurrenceToDoc(docnum);
+				int occ = winfo.occurrencesInDoc(docnum);
+				//System.out.println("El termino es " + wterm + " lleva tantas " + occ );
+				dupWeights.put(indexV, occ);
 				//++winfo.occurrences;
 			}
 		}
-		
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -195,7 +227,7 @@ public class Indexer {
 		if(Parser.existingDoc){
 			System.out.println("This DOC has already being indexed..." );
 			//System.exit(0);
-		}
+		}else{
 		
 		loadLexicon();
 		loadInvertIndex();
@@ -213,7 +245,29 @@ public class Indexer {
 			}
 		} 
 		
+		
+		/* 
+		 * We store the <d,tf> in an array, 
+		 * iterate throught it to compute the total DOC weight
+		 * and save it in realWeights
+		 * 
+		 * */
+		Object[] abc = dupWeights.values().toArray();
+		
+		double accumulated = 0;
 
+	    for(int i = 0; i < abc.length ; i++){      
+	      
+	      String str = abc[i].toString(); 
+		  double d = Double.valueOf(str).doubleValue();
+		  
+	      accumulated += Math.pow((1 + Math.log(d)),2) ;
+	    }
+	    
+	    accumulated = Math.sqrt(accumulated);
+	    Weights.realWeights.put(docnum, accumulated);
+	    
+	 }
 		
 	}	
 	

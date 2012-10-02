@@ -18,6 +18,8 @@ public class index {
 	 * @throws IOException 
 	 */
 	
+	
+	
 	public static void main(String[] args) throws IOException {
 		
 		
@@ -27,7 +29,7 @@ public class index {
 		/* Get parameters */
 		myParser.getopts(args);
 		myParser.printparam();
-		
+			
 		
 		/*  
 		 *  Iterate Through all the Docs 
@@ -73,10 +75,13 @@ public class index {
 		    		}
 		    			    		
 		    	}
-		    	++Parser.mydocnumber;
+		    	++Parser.mydocnumber;	    	
 		    	System.out.println();
 		    }
-   
+		    
+		    //Weights.printWeights();
+		    /* Rewrite map with Documents Weights */
+	    	Weights.rewritemap();
 		    input.close();
 	}
 	
