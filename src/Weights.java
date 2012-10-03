@@ -35,10 +35,6 @@ public class Weights {
 
 	}
 	
-	public static String readMapID(int doc) throws FileNotFoundException{
-		return  Parser.getDocID(doc);
-	}
-
 
 	/* Utility function for computing the final similarity value of a DOC respect to a query */
 	public static String readMapWeight(int doc) throws FileNotFoundException {
@@ -136,8 +132,7 @@ public class Weights {
 
 		System.out.println("Weights...");
 		Weights.readMapWeight(2);
-		String a = Weights.readMapID(2);
-		System.out.println(a);
+
 	}
 
 }

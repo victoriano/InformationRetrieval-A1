@@ -3,13 +3,19 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 
 public class Accumulator {
 	
 	/* The Hashtable where Accumulators for each DOC are stored */
 	public static HashMap<Integer, Double> theAccumulator = new HashMap<Integer, Double>();
+	
+	/* The Tree storing in a sorted way the values */
+	public static TreeMap<Double, String> minheap = new TreeMap<Double, String>();
+	public static NavigableMap<Double, String> nminheap = new TreeMap<Double, String>();
 	
 	public static double computeAD ( int N, int ft, int fdt ){
 		
@@ -80,6 +86,49 @@ public class Accumulator {
 			System.out.println("DOC: " + mykeys[i] + " Cosine Similarity for Query is: " + myvalues[i]);
 		}
 
+	}
+	
+	public static void addtoMinheap() {
+
+		Object[] mykeys = theAccumulator.keySet().toArray();
+		Object[] myvalues = theAccumulator.values().toArray();
+
+		for (int i = 0; i < mykeys.length; ++i) {
+			
+			//System.out.println("Adding DOC: " + mykeys[i] + " with similarity " + myvalues[i]);
+			minheap.put(Double.parseDouble(myvalues[i].toString()), mykeys[i].toString());
+			
+		}
+
+		nminheap =  minheap.descendingMap(); 
+		//System.out.println(nminheap);
+
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void printTopResults(int numResults, String queryLabel) throws FileNotFoundException {
+			
+		int i = 0;
+		
+		Iterator it = nminheap.entrySet().iterator();
+		int size = nminheap.size();
+				
+		while (i< numResults && i < size) {
+						
+			Map.Entry e = (Map.Entry) it.next();
+			
+			String  simValue = e.getKey().toString();
+			
+			int doc = Integer.parseInt(e.getValue().toString());
+			String docID = Parser.getDocID(doc);
+			
+			// N51 LA010189-0003 1 110.541 format
+			int newi = i+1;
+			System.out.println(queryLabel + " " + docID + " " + newi + " " + simValue);
+			++i;
+		}
+		
+		System.out.println();
 	}
 	
 	/**

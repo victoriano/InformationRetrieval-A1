@@ -8,7 +8,7 @@ import java.util.Scanner;
  * @author Victoriano Izquierdo
  * @student 3395032
  * @course Information Retrieval
- * @assignment 1
+ * @assignment 2
  */
 
 public class index {

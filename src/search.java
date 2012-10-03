@@ -23,31 +23,21 @@ public class search {
 	String map_path;
 	
 	/* For Ranked Query */
-	String queryLabel;
-	int numResults;
+	static String queryLabel;
+	static int numResults;
 	
 	/* For Novelty Detection */
 	int lambdaNumber;
 	int ranknUsed;
 	
 	/* For benchmarking */
-	long start;
-	long end;
+	static long start;
+	static long end;
 	
 	boolean isRanked;
 	
 	ArrayList<String> querieTerms = new ArrayList<String>();
 		
-	 /**
-     * Returns the execution time of the search
-     * @return time
-     */
-    public long executionTime(){
-    	this.start = System.currentTimeMillis();
-		this.end = System.currentTimeMillis();
-        return end-start;
-    }
-    
 	
 	/** 
 	 * Another simple getopts() 
@@ -165,7 +155,8 @@ public class search {
 	*/
 	
 	public static void main(String[] args) throws IOException {
-						
+		
+		start = System.currentTimeMillis();				
 		search s = new search();
 		Indexer indexer = new Indexer();
 		int qkey;
@@ -177,7 +168,8 @@ public class search {
 			
 		for(String qterm : StemmedQuerieTerms){
 			
-			System.out.println("Search for: " + qterm);
+			//System.out.println("Search for: " + qterm);
+			
 			//Checks if the term was already in the lexicon
 			if(indexer.lexicon.containsValue(qterm)){ 
 				
@@ -190,26 +182,28 @@ public class search {
 				//Convert that String to a Word
 				Word myword = new Word(qterm, rawstring);
 				
-				//Compute the accumulator for the DOCs where this term is present
+				//Compute the accumulators for the DOCs where this term is present
 				myword.computeTotalAD();
-				
-				//Retrieve Documents
-				//myword.retrievePrintDocs();
-
-				System.out.println();
 
 			}else{
-				System.out.println(qterm + " is not indexed");
-				System.out.println();
+				// Case the present queried term is not part of the lexicon
+				//System.out.println(qterm + " is not indexed");
 			}
 			
 		
 		}
+	
 		
-		//Once all query terms procecessed, print the accumulation
-
+		// Divide the accumulator by their corresponding Wd
 		Accumulator.computeFinalAD();
-		Accumulator.printAccumulations();
+		// Adding the similarity values to a Min-Heap
+		Accumulator.addtoMinheap();
+		Accumulator.printTopResults(numResults, queryLabel);
+		
+		//Printing the total time spent for the Query
+		end = System.currentTimeMillis();
+		long totalTime = end-start;
+        System.out.println("Running Time: " + totalTime + " ms") ;
 		
 	}
 }

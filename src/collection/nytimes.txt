@@ -1,25 +1,52 @@
 <DOC>
-<DOCNO> BW19990924.0019 </DOCNO>
+<DOCNO> AW19990924.0019 </DOCNO>
 <DATE_TIME> 1999-09-24 15:30:14 </DATE_TIME>
 <BODY>
 <CATEGORY> usa </CATEGORY>
-<HEADLINE> Court Nixes Late-Term Abortion Laws </HEADLINE>
+<HEADLINE> Studing sleeping </HEADLINE>
 <TEXT>
-<P> Text Content 23 people of the, duke 34document ciudad-real duke caresses cats sing singing ,peter duke
+<P> The university of Duke is the greatest places to study the Science of sleeping, according to their students
 </P>
 </TEXT>
 </BODY>
 </DOC>
 
 <DOC>
-<DOCNO> AW19990924.0019 </DOCNO>
+<DOCNO> BW19990924.0019 </DOCNO>
+<DATE_TIME> 1999-09-24 15:30:14 </DATE_TIME>
+<BODY>
+<CATEGORY> usa </CATEGORY>
+<HEADLINE> Real Madrid the best team in the world </HEADLINE>
+<TEXT>
+<P> According to a study by the University of California, Real Madrid is the best football team of the Earth right now 
+</P>
+</TEXT>
+</BODY>
+</DOC>
+
+<DOC>
+<DOCNO> CW19990924.0019 </DOCNO>
+<DATE_TIME> 1999-09-24 15:30:14 </DATE_TIME>
+<BODY>
+<CATEGORY> usa </CATEGORY>
+<HEADLINE> Spanish people demonstrate on the streets </HEADLINE>
+<TEXT>
+<P> Millions of "students" went to the streets to demonstrate againsts the goverment cuts singing songs they sing
+</P>
+</TEXT>
+</BODY>
+</DOC>
+
+<DOC>
+<DOCNO> DW19990924.0019 </DOCNO>
 <DATE_TIME> 1999-09-24 15:30:14 </DATE_TIME>
 <BODY>
 <CATEGORY> usa </CATEGORY>
 <HEADLINE> Court Nixes Late-Term Abortion Laws </HEADLINE>
 <TEXT>
-<P> "Segundo" texts people -para probar people
+<P> Abortion is a complicated issue for every student who get pregnant before 20 years old according to a study
 </P>
 </TEXT>
 </BODY>
 </DOC>
+
