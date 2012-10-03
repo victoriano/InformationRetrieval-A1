@@ -89,7 +89,43 @@ public class Word {
 		}		
 		
 	}
-			
+	
+
+	
+	/* ** Utility function for new Ranked Search, returns Fdt of a particular DOC for this Word ** */
+	
+	public int retrieveFDTDocs(int thedoc) throws FileNotFoundException{
+		int fdt = 0;
+		ArrayList<Integer> docs = this.presentDocs();
+		for(int doc : docs){
+			if(doc == thedoc){
+				fdt = this.getDocOccurrences(doc);
+				//System.out.println( "El Doc " + thedoc + " tiene " + this.getDocOccurrences(doc) + " repeticiones de " + this.term);				
+			}	
+		
+		}
+		
+		return fdt;
+	}
+	
+	/* ** Main Utility function for new Ranked Search, returns an array of DOCs where there is a instance of this Word ** */
+	
+	public void computeTotalAD() throws FileNotFoundException{
+		int N = Accumulator.getN();
+		int ft = occurrences;
+		//System.out.println("Total Occurrences: " + ft);
+		
+		ArrayList<Integer> docs = this.presentDocs();
+		for(int doc : docs){			
+			int fdt = retrieveFDTDocs(doc);
+			//System.out.println("The DOC: " + doc + " has " + fdt + " repetitions of " + this.term);
+			double computedAccumulation = Accumulator.computeAD ( N, ft, fdt);
+			//System.out.println("Computed Accumulation is " + computedAccumulation);
+			Accumulator.addAccu(doc, computedAccumulation);		
+		}	
+		
+	}
+	
 	@SuppressWarnings("unchecked")
 	/*Form a serialized String info of this word */
 	public String serializeWord (){

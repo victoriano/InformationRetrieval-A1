@@ -169,7 +169,6 @@ public class search {
 		search s = new search();
 		Indexer indexer = new Indexer();
 		int qkey;
-		int totalOccurrences;
 		
 		s.getopts(args);
 		ArrayList<String> StemmedQuerieTerms = new ArrayList<String>();
@@ -181,17 +180,22 @@ public class search {
 			System.out.println("Search for: " + qterm);
 			//Checks if the term was already in the lexicon
 			if(indexer.lexicon.containsValue(qterm)){ 
+				
 				//Get the key associated with that value in the Lexicon
 				qkey = indexer.findKey(qterm);
+				
 				//Scanner the doc line of qkey get a String 
 				String rawstring = s.readLineOfIndex(qkey);
-				//Convert that String to Word
+				
+				//Convert that String to a Word
 				Word myword = new Word(qterm, rawstring);
-				//Retrieve Total occurences of the query term
-				totalOccurrences = myword.occurrences;
-				System.out.println("Total Occurrences: " + totalOccurrences);
+				
+				//Compute the accumulator for the DOCs where this term is present
+				myword.computeTotalAD();
+				
 				//Retrieve Documents
-				myword.retrievePrintDocs();
+				//myword.retrievePrintDocs();
+
 				System.out.println();
 
 			}else{
@@ -201,6 +205,11 @@ public class search {
 			
 		
 		}
+		
+		//Once all query terms procecessed, print the accumulation
+
+		Accumulator.computeFinalAD();
+		Accumulator.printAccumulations();
 		
 	}
 }
