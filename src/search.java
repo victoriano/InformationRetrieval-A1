@@ -157,6 +157,7 @@ public class search {
 	public static void main(String[] args) throws IOException {
 		
 		start = System.currentTimeMillis();				
+		
 		search s = new search();
 		Indexer indexer = new Indexer();
 		int qkey;
@@ -199,6 +200,10 @@ public class search {
 		// Adding the similarity values to a Min-Heap
 		Accumulator.addtoMinheap();
 		Accumulator.printTopResults(numResults, queryLabel);
+		
+		//If it's a Novelty Detection Search
+		RankedDoc.createR(4);
+		RankedDoc.computeDDmaxDifference();
 		
 		//Printing the total time spent for the Query
 		end = System.currentTimeMillis();

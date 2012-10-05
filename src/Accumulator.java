@@ -131,6 +131,7 @@ public class Accumulator {
 		System.out.println();
 	}
 	
+	 
 	/**
 	 * Main for testing Accumulator structure and behaviour
 	 * @throws FileNotFoundException 
@@ -143,6 +144,7 @@ public class Accumulator {
 		
 		int N = Accumulator.getN();
 		System.out.println(N);
+
 
 	}
 
