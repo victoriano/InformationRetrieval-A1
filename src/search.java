@@ -27,14 +27,14 @@ public class search {
 	static int numResults;
 	
 	/* For Novelty Detection */
-	int lambdaNumber;
-	int ranknUsed;
+	static double lambdaNumber;
+	static int ranknUsed;
 	
 	/* For benchmarking */
 	static long start;
 	static long end;
 	
-	boolean isRanked;
+	static boolean isNovelty;
 	
 	ArrayList<String> querieTerms = new ArrayList<String>();
 		
@@ -49,7 +49,7 @@ public class search {
 		
 		/* Query for Ranked Retrieval */
 		if(args[1].equals("-q")){
-			isRanked = true;
+			isNovelty = false;
 			queryLabel = args[2];
 			numResults = Integer.parseInt(args[4]);
 			lexicon_path = args[5];
@@ -62,8 +62,8 @@ public class search {
 		
 		/* Query for Novelty Detection */	
 		}else if(args[1].equals("-lambda")){
-			isRanked = false;
-		    lambdaNumber = Integer.parseInt(args[2]);
+			isNovelty = true;
+		    lambdaNumber = Double.parseDouble(args[2]); 
 			queryLabel = args[4];
 			numResults = Integer.parseInt(args[6]);			
 			
@@ -146,9 +146,12 @@ public class search {
 	 * Find the word in the lexicon if not - not found and exit()
 	 * get and use the key of that word 
 	 * to search in the Index that word
-	 * retrieve from Word - total occurrences
-	 * 					  - array of docs containing that word
-	 * print these data
+	 * retrieve from Word the information 
+	 * necessary to calculate the Similarity 
+	 * cosine function of the given query 
+	 * respect to to each DOC of the 
+	 * collection previously indexed
+	 * it also can apply for Novelty detection
 	 * 
 	 * 
 
@@ -193,18 +196,22 @@ public class search {
 			
 		
 		}
-	
-		
-		// Divide the accumulator by their corresponding Wd
+			
+		// Operations for Ranked Search
 		Accumulator.computeFinalAD();
-		// Adding the similarity values to a Min-Heap
 		Accumulator.addtoMinheap();
 		Accumulator.printTopResults(numResults, queryLabel);
 		
-		//If it's a Novelty Detection Search
-		RankedDoc.createR(4);
-		RankedDoc.computeDDmaxDifference();
-		
+		//If it's a Novelty Detection Search...
+		if(isNovelty){
+			
+			RankedDoc.createR(ranknUsed);
+			RankedDoc.computeNovelty(lambdaNumber); 
+			RankedDoc.addtoMinheap();
+			RankedDoc.printTopResults(numResults, queryLabel);
+			
+		}
+	
 		//Printing the total time spent for the Query
 		end = System.currentTimeMillis();
 		long totalTime = end-start;

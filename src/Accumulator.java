@@ -56,9 +56,7 @@ public class Accumulator {
 		} 
 	
 	}
-	
-
-	
+		
 	/* Simple utility function for counting the total number of DOC indexed in map.tx */
 	public static int getN() throws FileNotFoundException{
 		
@@ -112,6 +110,9 @@ public class Accumulator {
 		
 		Iterator it = nminheap.entrySet().iterator();
 		int size = nminheap.size();
+		
+		System.out.println("------ Ranked Search ------");
+		System.out.println();
 				
 		while (i< numResults && i < size) {
 						
@@ -131,21 +132,5 @@ public class Accumulator {
 		System.out.println();
 	}
 	
-	 
-	/**
-	 * Main for testing Accumulator structure and behaviour
-	 * @throws FileNotFoundException 
-	 */
-	
-	public static void main(String[] args) throws FileNotFoundException {
-				
-		double a = Accumulator.computeAD(8, 3, 2);
-		System.out.println(a);
-		
-		int N = Accumulator.getN();
-		System.out.println(N);
-
-
-	}
 
 }
