@@ -106,7 +106,7 @@ public class RankedDoc {
 						
 						//System.out.println("Docs similiarity is " +  sim2);
 						
-						/* Keeping the highest similarity score in RankedDoc.similarity */
+						/* Keeping the highest similarity score in RankedDoc.DDmaxDifference */
 						if(sim2 > temporalMaxSim2){
 							R.get(i).DDmaxDifference = sim2;
 							temporalMaxSim2 = sim2;
