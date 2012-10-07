@@ -1,31 +1,31 @@
-- Report -
+- Report Infomation Retrieval -
+//Assignment 2
+
 Victoriano Izquierdo
 Student Nº 3395032
 
-*Index Construction 
-Parsing and indexing implementation -
+*Ranked Retrieval
 
-First of all the optional parameters are gathered using a simple getopts() function. Then start iterating through the docs enclosed by <DOC></DOC> tags. Once we are inside a document we gather its ID using a findid() function.
+In order to be able to implement the ranked search I started by modifying some of the code I wrote in the previous for indexing. I store now in map.txt a weight for each one of the documents of the colletion indexed. For that matter I created Weights class where thanks to HashMap realWeights I can keep track of each DOC accumulated weight that I compute using the Indexer class as well (see Exect method) following the algorithm seen page 56 of the Information Retrieval lecture notes. 
 
-Then we open the map file, check if there are any other doc already mapped or this one has already been mapped, add it if it is new, write the file and close it. 
+Then I run the query search and basically I also followed the procedure described on page 63 of the lecture notes "Query Processing Algorithm". I process each query at a time, I call the function computeTotalAD() in the Word class that retrieve the values of the parameters needed (N, ft, fdt) using different utility functions I created to do so and ends up adding the accumulated similarity value with Accumulator.addAccu() in a HashTable called "theAccumulator" located in the Accumulator class. 
 
-Now we will parse the text enclosed within <TEXT></TEXT> tags using readtext() function from the Parser and save all of them - except those that follow a HTML tag pattern - in List of currentTokens.
+Once all the query terms has been processed and its Ad computed I call in search.java the Accumulator.computeFinalAD() to just divide Ad of a document by its corresponding peso Wd.
 
-Next we will call the stemmtext() function to stemm all of these terms , putting them in lower case, removing punctuation and other symbols and following the Porter rules specified in the slides plus ing and ed terminations. I created a Stemmer class for all of that. Stemmed tokens are save in a List of currentStemmedtokens.
+It's time to call Accumulator.addtoMinheap() to move the similarity values of each document to Min-heap to make more efficient the retrieving of the top ranked documents. For that matter I used the recommended data structure TreeMap<Double, String> minheap. 
 
-Now we create a instance of the Indexer class and pass the list of stemmed tokens to be indexed. 
+Finally I call Accumulator.printTopResults(numResults, queryLabel) passing the flags parameter introduced when firing the program to identify the query with a label and limit the number of n documents to show to user as results of the search.
 
-For that matter, we will check first if this DOC has already been indexed, if not, we will load the Lexicon file and Index to memory in 2 separated data structure, hash tables. We will start adding each of the stemmed terms checking first if they are already in the Lexicon, if it is, we will just go to the index and we will update the total number of occurrences for that term and increment by one the occurrences in for that particular Doc being read. If it is a new term we add it to the Lexicon data structure on memory. We write the new index and lexicon in every Doc iteration. 
 
-*Index Search
-Index search implementation -
+*Novelty Detection
 
-For searching, after retrieving all the parameters and storing all the queries in an ArrayList, we proceed to load in memory all the Lexicon, then we will check if the query term is already in the Lexicon, if it is we get its corresponding key that we will use iterate over the file containing the index and retrieve just that single line as a String. Using an utility function defined in the Word class we create an instance of this term of the index and read its information, that is: the total number of occurrences of that term and the Docs that contain this term along with its frequencies.  
+Novelty detection is nothing more than an extesion of the "ranked retrieval" to rerank again the documents giving priority in the top results to those that are more original respect to the others. Therefore I implemented it after "ranked retrieval" actions were taken in the flow of the program. 
 
-*Index Size
+Starts in search.java by checking the boolean variable isNovelty that is initialized in the getopts() function detecting from args wether is a search with Novelty detection or not. Then I call RankedDoc.createR(ranknUsed) to create the set R that is an ArrayList of <RankedDoc> with the top r given results. RankedDoc is an object that keeps the DOC int ID, its similarity respect to the query, the maximum similarity respect to the other DOCs in R (DDmaxDifference) and the final novelty value computed. createR() not just store this -R collection of documents but also RankedDoc.initializeS() initalize the set S where manually some DOC can be kept, by default I left just the DOC with id number 2 intact. 
 
-¿How large is your inverted index? How does this compare with the size of the original collection? Why is it larger/smaller than the original collection?
+After that, RankedDoc.computeNovelty(lambdaNumber) is invoked. This function will traverse the R ArrayList, compare each DOC respect to the other DOC by a similarity function, keep the highest score in DDmaxDifference, in total n*n comparaisons. At the end the novelty of each DOC is computed by i.novelty = (lambda * i.similarity) - ((1- lambda) * i.DDmaxDifference) as expressed in the formula of the assignment statement. 
 
-The inverted index is as big as the number of stemmed terms indexed in the lexicon. This size is quite smaller than the original collection, since we omitted all the repeated words and much other useless information for searching. 
+For the DDmaxDifference since it's wasn't very well expressed anywhere how to compute the cosine similarity of two DOCs based on their weights calculated during the indexing and stored in map.txt, the most effective way I tought was to just get the difference of both weights double sim2 = wdi-wdj . I know this might not be the best number to compare two documents but it's significative and fast. Scanning all the terms of each document and check the frequencies of its term in the other documents of the collection would be very very inneficient in term of computation time for a large collection. 
 
+After having the novelty values I procee to put this in a min-heap (TreeMap) RankedDoc.addtoMinheap() and print the top n values in the same manner I did previously RankedDoc.printTopResults(numResults, queryLabel) 
 
